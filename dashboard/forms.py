@@ -1,12 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import DashboardData
+from .models import DashboardData, PredictionData
 
 class DashboardDataForm(forms.ModelForm):
 	class Meta:
 		model = DashboardData
 		fields = ['glucose', 'weight', 'systolic_bp', 'diastolic_bp']
+
+class PredictionDataForm(forms.ModelForm):
+	class Meta:
+		model = PredictionData
+		fields = ['bmi', 'dpf', 'age']
+
 
 class SignUpForm(UserCreationForm):
 	class Meta:

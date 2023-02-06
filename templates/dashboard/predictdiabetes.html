@@ -4,102 +4,70 @@
 
 {% block content %}
 
-<div class="row mt-4">
-	<div class="col-md-4 mt-4">
-		<div class="card">
-			<div class="card-header">
-				<h2>Chart Test</h2>
-			</div>
-			<div class="card-body">
-				<form method="POST">
-					{% csrf_token %}
-					{{form.as_p}}
-					<input type="submit" value="Add" class="btn btn-success btn-block">
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-8 mt-4">
-		<div class="card">
-      <div class="card-header">
-        <h2>Population</h2>
+<div class="pagetitle">
+  <h1>Predict Diabetes Risk</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Predict Diabetes Risk</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-title p-4">
+          <h2>Diabetes Status</h2>
+          <div id="dateToday" style="color: gray;"></div>
+        </div>
+        <div class="card-body">
+          <form class="row g-3" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
       </div>
-			<div class="card-body">
-				<div>
-				  <canvas id="myChart2"></canvas>
-				</div>
-			</div>				
-		</div>
-	</div>
-	<div class="col-md-4">
-	</div>
-	<div class="col-md-8 mt-4">
-		<div class="card">
-      <div class="card-header">
-        <h2>Money</h2>
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Line Chart</h5>
+
+          <!-- Line Chart -->
+          <canvas id="lineChart" style="max-height: 400px;"></canvas>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              new Chart(document.querySelector('#lineChart'), {
+                type: 'line',
+                data: {
+                  labels: [{% for predicted_values in predicted_values %} '{{ predicted_values.date }}', {% endfor %}],
+                  datasets: [{
+                    label: 'Diabetes Probability (in percent)',
+                    data: [{% for predicted_values in predicted_values %} {{predicted_values.predictions }}, {% endfor %}],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            });
+          </script>
+          <!-- End Line CHart -->
+
+        </div>
       </div>
-			<div class="card-body">
-				<div>
-				  <canvas id="myChart"></canvas>
-				</div>
-			</div>				
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [{% for countryInfo in countryInfo %} '{{ countryInfo.dateNow }}', {% endfor %}],
-      datasets: [{
-        label: '# of Votes',
-        data: [{% for countryInfo in countryInfo %} {{countryInfo.money }}, {% endfor %}],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-
-    }
-  });
-
-  const ctx2 = document.getElementById('myChart2');
-
-  new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: [{% for countryInfo in countryInfo %} '{{ countryInfo.dateNow }}', {% endfor %}],
-      datasets: [{
-        label: '# of Votes',
-        data: [{% for countryInfo in countryInfo %} {{countryInfo.population }}, {% endfor %}],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      plugins: {
-          title: {
-          display: true,
-          text: 'Chart.js Line Chart'
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-</script>
-
 {% endblock %}
+

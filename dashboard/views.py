@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import DashboardData
-from .forms import DashboardDataForm, SignUpForm
+from .models import DashboardData, PredictionData
+from .forms import DashboardDataForm, SignUpForm, PredictionDataForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
@@ -47,6 +47,29 @@ def addDashboard(request):
 		'dashboardInfo':dashboardInfo
 	}
 	return render(request, 'dashboard/diabetestracker.html', context)
+
+
+@login_required
+def addAndPredictDiabetes(request):
+	predicted_values = PredictionData.objects.filter(author = request.user)
+
+	if request.method == 'POST':
+		form = PredictionDataForm(request.POST)
+		if form.is_valid():
+			instance = form.save(commit=False) 
+			instance.author = request.user
+
+			# Save our form
+			instance.save()
+			return redirect('dashboard-addAndPredictDiabetes')
+	else:
+		form = PredictionDataForm()
+	context	= {
+		'form':form,
+		'predicted_values':predicted_values
+	}
+
+	return render(request, 'dashboard/predictdiabetes.html', context)
 
 
 def signup(request):

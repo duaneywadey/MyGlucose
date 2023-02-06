@@ -8,7 +8,9 @@ urlpatterns = [
 	path('login/', authView.LoginView.as_view(template_name='dashboard/login.html'), name='dashboard-log-in'),
 	path('logout/', views.logout_view, name='dashboard-logout_view'),
 	path('history/', views.history, name='dashboard-history'),
-	path('diabetesdashboard/', views.addDashboard, name='dashboard-addDashboard')
+	path('diabetesdashboard/', views.addDashboard, name='dashboard-addDashboard'),
+	path('addandpredictdiabetes/', views.addAndPredictDiabetes, name='dashboard-addAndPredictDiabetes')
+
 
 	
 ]
