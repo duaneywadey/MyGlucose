@@ -12,8 +12,8 @@ def index(request):
 	dashboardInfo = DashboardData.objects.filter(author = request.user)
 	avgGlucose = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('glucose')).get('glucose__avg'),2)
 	avgWeight = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('weight')).get('weight__avg'), 2)
-	avgSystolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg'),2)
-	avgDiastolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg'),2)
+	avgSystolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg'))
+	avgDiastolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg'))
 	context = {
 		'dashboardInfo':dashboardInfo,
 		'avgGlucose':avgGlucose,
@@ -71,6 +71,10 @@ def addAndPredictDiabetes(request):
 
 	return render(request, 'dashboard/predictdiabetes.html', context)
 
+@login_required
+def history(request):
+	return render(request, 'dashboard/history.html')
+
 
 def signup(request):
 	if request.method == 'POST':
@@ -94,9 +98,3 @@ def logout_view(request):
 	logout(request)
 	return render(request, 'dashboard/logout.html')
 
-def history(request):
-	countryInfo = CountryData.objects.all()
-	context = {
-		'countryInfo':countryInfo
-	}
-	return render(request, 'dashboard/history.html', context)

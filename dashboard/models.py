@@ -6,10 +6,10 @@ import joblib
 
 class DashboardData(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
-	glucose = models.IntegerField()
-	weight = models.IntegerField()
-	systolic_bp = models.IntegerField()
-	diastolic_bp = models.IntegerField()	
+	glucose = models.IntegerField(null=True)
+	weight = models.IntegerField(null=True)
+	systolic_bp = models.IntegerField(null=True)
+	diastolic_bp = models.IntegerField(null=True)	
 	dateNow = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
