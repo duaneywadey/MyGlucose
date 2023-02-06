@@ -1,0 +1,26 @@
+{% extends 'partials/baselogin.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center mt-4">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-title">
+					<h2 class="p-2"><img src="https://www.svgrepo.com/show/295702/veterinarian.svg" width="50" height="50" class="d-inline-block align-top" alt=""> Sign up</h2>
+					<hr>
+				</div>
+				<div class="card-body">
+					<p class="mb-4">Please fill in the following fields.</p>
+					<form method="POST">
+						{% csrf_token %}
+						{{form.as_p}}
+						<input type="Submit" class="btn btn-primary" value="Submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

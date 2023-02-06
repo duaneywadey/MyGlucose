@@ -1,0 +1,37 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} History {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header"><h2>History</h2></div>
+			<div class="card-body">
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">Country</th>
+				      <th scope="col">Population</th>
+				      <th scope="col">Money</th>
+				      <th scope="col">Author</th>
+				      <th scope="col">Date Added</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for countryInfo in countryInfo %}
+				    <tr>
+				    	<td>{{countryInfo.country}}</td>
+				    	<td>{{countryInfo.population}}</td>
+				    	<td>{{countryInfo.money}}</td>
+				    	<td>{{countryInfo.author}}</td>
+				    	<td>{{countryInfo.dateNow}}</td>
+				    </tr>
+					{% endfor %}
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+</div>
+{% endblock %}

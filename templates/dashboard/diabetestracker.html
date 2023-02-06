@@ -1,0 +1,77 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="pagetitle">
+  <h1>Diabetes Tracker</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Diabetes Tracker</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-title p-4">
+          <h2>Diabetes Status</h2>
+          <div id="dateToday" style="color: gray;"></div>
+        </div>
+        <div class="card-body">
+          <form class="row g-3" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="Submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+    var myDate = new Date();
+
+    let daysList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let monthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Aug', 'Oct', 'Nov', 'Dec'];
+
+
+    let date = myDate.getDate();
+    let month = monthsList[myDate.getMonth()];
+    let year = myDate.getFullYear();
+    let day = daysList[myDate.getDay()];
+
+    let today = `${date} ${month} ${year}, ${day}`;
+
+    const dateToday = document.getElementById("dateToday").innerHTML = today;
+
+
+
+    let amOrPm;
+    let twelveHours = function (){
+        if(myDate.getHours() > 12)
+        {
+            amOrPm = 'PM';
+            let twentyFourHourTime = myDate.getHours();
+            let conversion = twentyFourHourTime - 12;
+            return `${conversion}`
+
+        }else {
+            amOrPm = 'AM';
+            return `${myDate.getHours()}`}
+    };
+    let hours = twelveHours();
+    let minutes = myDate.getMinutes();
+
+    let currentTime = `${hours}:${minutes} ${amOrPm}`;
+
+    console.log(today + ' ' + currentTime);
+  </script>
+
+  
+{% endblock %}

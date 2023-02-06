@@ -1,0 +1,105 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="row mt-4">
+	<div class="col-md-4 mt-4">
+		<div class="card">
+			<div class="card-header">
+				<h2>Chart Test</h2>
+			</div>
+			<div class="card-body">
+				<form method="POST">
+					{% csrf_token %}
+					{{form.as_p}}
+					<input type="submit" value="Add" class="btn btn-success btn-block">
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 mt-4">
+		<div class="card">
+      <div class="card-header">
+        <h2>Population</h2>
+      </div>
+			<div class="card-body">
+				<div>
+				  <canvas id="myChart2"></canvas>
+				</div>
+			</div>				
+		</div>
+	</div>
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-8 mt-4">
+		<div class="card">
+      <div class="card-header">
+        <h2>Money</h2>
+      </div>
+			<div class="card-body">
+				<div>
+				  <canvas id="myChart"></canvas>
+				</div>
+			</div>				
+		</div>
+	</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [{% for countryInfo in countryInfo %} '{{ countryInfo.dateNow }}', {% endfor %}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{% for countryInfo in countryInfo %} {{countryInfo.money }}, {% endfor %}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+
+    }
+  });
+
+  const ctx2 = document.getElementById('myChart2');
+
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: [{% for countryInfo in countryInfo %} '{{ countryInfo.dateNow }}', {% endfor %}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{% for countryInfo in countryInfo %} {{countryInfo.population }}, {% endfor %}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: {
+          title: {
+          display: true,
+          text: 'Chart.js Line Chart'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+
+{% endblock %}
