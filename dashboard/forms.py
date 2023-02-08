@@ -9,9 +9,10 @@ class DashboardDataForm(forms.ModelForm):
 		fields = ['glucose', 'weight', 'systolic_bp', 'diastolic_bp']
 
 class PredictionDataForm(forms.ModelForm):
+	parentAgeDiabetes = forms.CharField(label="Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? Leave blank if your guradian doesn't have the disease.", required=False)
 	class Meta:
 		model = PredictionData
-		fields = ['bmi', 'dpf', 'age']
+		fields = ['height', 'weight', 'parentAgeDiabetes', 'age']
 
 
 class SignUpForm(UserCreationForm):

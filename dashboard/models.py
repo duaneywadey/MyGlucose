@@ -17,21 +17,28 @@ class DashboardData(models.Model):
 
 class PredictionData(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
-	bmi = models.FloatField(null=True)
-	dpf = models.FloatField(null=True)
+	height = models.FloatField(null=True)
+	weight = models.PositiveIntegerField(null=True)
+	parentAgeDiabetes = models.IntegerField(null=True, default=0)
 	age = models.PositiveIntegerField(null=True)
 	date = models.DateTimeField(auto_now_add=True)
+	defaultparentAgeDiabetes = models.IntegerField(null=True, default=0)
 
+	# Blank fields
+	bmi = models.FloatField(blank=True)
+	dpf = models.FloatField(blank=True)
 	predictions = models.PositiveIntegerField(blank=True)
+
 
 	def save(self, *args, **kwargs):
 		model = joblib.load('model/updated_ml_model_diabetes')
+		self.bmi = round(self.weight / ((self.height)**2),1)	
+		self.dpf = round((88 - self.parentAgeDiabetes + 20) / ((self.parentAgeDiabetes - 1) - 14 + 50),3)
 		self.predictions = model.predict_proba([[self.bmi, self.dpf, self.age]])[:, 1]	
-		self.predictions = self.predictions*100
+		self.predictions = self.predictions*100		
+
 		return super().save(*args, *kwargs)
 
-	class Meta:
-		ordering = ['-date']
 
 	def __str__(self):
 		return str(self.date)
