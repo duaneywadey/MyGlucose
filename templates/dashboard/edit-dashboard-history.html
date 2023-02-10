@@ -1,0 +1,27 @@
+{% extends 'partials/baselogin.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row align-items-center justify-content-center" style="height:100vh;">
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-title p-4">
+					<h2><i class="bi bi-pencil-square"></i> Edit Dashboard Input</h2>
+					<div class="text-center">
+						<a href="{% url 'dashboard-history' %}">Return to history</a>
+					</div>
+				</div>
+				<div class="card-body">
+					<form method="POST">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<input type="Submit" class="btn btn-primary" value="Save">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

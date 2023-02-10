@@ -9,10 +9,21 @@ class DashboardDataForm(forms.ModelForm):
 		fields = ['glucose', 'weight', 'systolic_bp', 'diastolic_bp']
 
 class PredictionDataForm(forms.ModelForm):
-	dpf = forms.CharField(label="DPF (Leave this blank if your parents don't have the disease.)", required=False)
+	dpf = forms.CharField(label="DPF (Put zero if neither your mother nor father have the disease)", required=False)
 	class Meta:
 		model = PredictionData
 		fields = ['height', 'weight', 'dpf', 'age']
+
+class EditDashboardDataForm(forms.ModelForm):
+	class Meta:
+		model = DashboardData
+		fields = ['glucose', 'weight', 'systolic_bp', 'diastolic_bp']
+
+class EditPredictionDataForm(forms.ModelForm):
+	dpf = forms.CharField(label="DPF (Put zero if neither your mother nor father have the disease)", required=False)
+	class Meta:
+		model = PredictionData
+		fields = ['height', 'weight', 'age', 'dpf']
 
 
 class SignUpForm(UserCreationForm):

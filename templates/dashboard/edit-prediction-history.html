@@ -1,0 +1,71 @@
+{% extends 'partials/baselogin.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row align-items-center justify-content-center" style="height:100vh;">
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-title p-4">
+					<h2><i class="bi bi-pencil-square"></i> Edit Prediction Input</h2>
+					<div class="text-center">
+						<a href="{% url 'dashboard-history' %}">Return to history</a> / 
+          				<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Get your DPF here!</a>  
+					</div>
+				</div>
+				<div class="card-body">
+					<form method="POST">
+						{% csrf_token %}
+						{{ form_prediction.as_p }}
+						<input type="Submit" class="btn btn-primary" value="Save">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Diabetes Pedigree Function (DPF)</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
+          <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Leave blank if your guradian doesn't have the disease.</i></p>
+          <div class="row">
+            <div class="col-md-6">
+              
+              <input type="text" class="form-control" id="age" oninput="ageToDPF()">
+              <input type="text" class="form-control mt-2" id="dpfvalue">
+              <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>                                     
+            </div>
+          </div>     
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const age = document.getElementById('age')
+  const dpfvalue = document.getElementById('dpfvalue')
+
+  function ageToDPF() {
+    let output = ((88 - parseFloat(age.value)) + 20) / (((parseFloat(age.value) - 1) - 14) + 50);
+    dpfvalue.value = parseFloat(output.toFixed(3));
+    console.log(output);
+}
+
+  function copyToClipboard() {
+    dpfvalue.select();
+    document.execCommand('copy');
+      alert("Copied to clipboard");
+  }
+
+</script>
+
+{% endblock %}

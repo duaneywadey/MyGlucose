@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import DashboardData, PredictionData
-from .forms import DashboardDataForm, SignUpForm, PredictionDataForm
+from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
 from django.db.models import Avg
 from django.shortcuts import redirect 
+
+
 
 @login_required
 def index(request):
@@ -19,7 +21,7 @@ def index(request):
 		'avgGlucose':avgGlucose,
 		'avgWeight':avgWeight,
 		'avgSystolic':avgSystolic,
-		'avgDiastolic':avgDiastolic
+		'avgDiastolic':avgDiastolic,
 	}
 
 	return render(request, 'dashboard/index.html', context)
@@ -73,7 +75,77 @@ def addAndPredictDiabetes(request):
 
 @login_required
 def history(request):
-	return render(request, 'dashboard/history.html')
+	dashboardInfo = DashboardData.objects.filter(author = request.user)
+	predictionInfo = PredictionData.objects.filter(author = request.user)
+
+	context = {
+		'dashboardInfo': dashboardInfo,
+		'predictionInfo':predictionInfo
+	}
+
+	return render(request, 'dashboard/history.html', context)
+
+@login_required
+def historyEdit(request, pk):
+	dashboardSingleInfo = DashboardData.objects.get(id=pk)
+	if request.method == 'POST':
+		form = DashboardDataForm(request.POST, instance=dashboardSingleInfo)
+		if form.is_valid():
+			form.save()
+			return redirect('dashboard-history')
+	else:
+		form = DashboardDataForm(instance=dashboardSingleInfo)
+	context = {
+		'dashboardSingleInfo': dashboardSingleInfo,
+		'form': form,
+	}
+	return render(request, 'dashboard/edit-dashboard-history.html', context)
+
+@login_required
+def predictionEdit(request, pk):
+	predictionSingleInfo = PredictionData.objects.get(id=pk)
+	if request.method == 'POST':
+		form_prediction = EditPredictionDataForm(request.POST, instance=predictionSingleInfo)
+		if form_prediction.is_valid():
+			form_prediction.save()
+			return redirect('dashboard-history')
+	else:
+		form_prediction = EditPredictionDataForm(instance=predictionSingleInfo)
+	context = {
+		'predictionSingleInfo': predictionSingleInfo,
+		'form_prediction': form_prediction,
+	}
+	return render(request, 'dashboard/edit-prediction-history.html', context)
+	
+	
+
+def historyDelete(request,pk):
+	dashboardSingleInfo = DashboardData.objects.get(id=pk)
+
+	if request.method == 'POST':
+		dashboardSingleInfo.delete()
+		return redirect('dashboard-history')
+
+	context = {
+		dashboardSingleInfo: 'dashboardSingleInfo'
+	}
+
+	return render(request, 'dashboard/delete-dashboard-history.html', context)
+
+
+def predictionDelete(request,pk):
+	predictionSingleInfo = PredictionData.objects.get(id=pk)
+
+	if request.method == 'POST':
+		predictionSingleInfo.delete()
+		return redirect('dashboard-history')
+
+	context = {
+		predictionSingleInfo: 'predictionSingleInfo'
+	}
+
+	return render(request, 'dashboard/delete-prediction-history.html', context)
+
 
 
 def signup(request):
@@ -97,4 +169,22 @@ def signup(request):
 def logout_view(request):
 	logout(request)
 	return render(request, 'dashboard/logout.html')
+
+
+# Getting all users
+
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+# users = User.objects.all()
+
+
+
+# One to many relationship
+
+# class Business(models.Model):
+#    user = models.ForeignKey(User, on_delete=models.CASCADE)
+# class Job(models.Model):
+#     business = models.ForeignKey(Business, on_delete= models.CASCADE)
+
+# Job.objects.filter(business__user=user) 
 

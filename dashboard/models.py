@@ -21,7 +21,7 @@ class PredictionData(models.Model):
 	weight = models.PositiveIntegerField(null=True)
 	age = models.PositiveIntegerField(null=True)
 	date = models.DateTimeField(auto_now_add=True)
-	dpf = models.FloatField(blank=True)
+	dpf = models.FloatField(default=0)
 
 	# Blank fields
 	bmi = models.FloatField(blank=True)
