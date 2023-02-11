@@ -2,6 +2,8 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <div class="container">
 	<div class="row justify-content-center mt-4">
@@ -13,9 +15,9 @@
 				</div>
 				<div class="card-body">
 					<p class="mb-4">Please fill in the following fields.</p>
-					<form method="POST">
+					<form class="row g-3 mt-2" method="POST">
 						{% csrf_token %}
-						{{form.as_p}}
+						{{form|crispy}}
 						<input type="Submit" class="btn btn-primary" value="Submit">
 					</form>
 				</div>

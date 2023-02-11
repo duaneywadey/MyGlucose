@@ -2,6 +2,8 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <div class="container">
 	<div class="row align-items-center justify-content-center" style="height:100vh;">
@@ -14,9 +16,9 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<form method="POST">
+					<form class="row g-3 mt-2" method="POST">
 						{% csrf_token %}
-						{{ form.as_p }}
+						{{ form|crispy}}
 						<input type="Submit" class="btn btn-primary" value="Save">
 					</form>
 				</div>

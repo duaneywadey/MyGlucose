@@ -2,6 +2,8 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div class="pagetitle">
@@ -25,7 +27,7 @@
         <div class="card-body">
           <form class="row g-3" method="POST">
             {% csrf_token %}
-            {{form.as_p}}
+            {{form|crispy}}
             <input type="Submit" value="Submit" class="btn btn-primary">
           </form>
         </div>

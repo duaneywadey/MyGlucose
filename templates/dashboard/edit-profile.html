@@ -2,17 +2,9 @@
 
 {% block title %} Dashboard {% endblock %}
 
-{% block content %}
+{% load crispy_forms_tags %}
 
-<div class="pagetitle">
-  <h1>Profile</h1>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item active">Profile</li>
-    </ol>
-  </nav>
-</div><!-- End Page Title -->
+{% block content %}
 
 <div class="container">
   <div class="row justify-content-center">
@@ -29,12 +21,10 @@
           </div>              
           <!-- Vertical Form -->
           <form class="row g-3 mt-2" method="POST" enctype="multipart/form-data">
-            <div class="col-12">
               {% csrf_token %}
-            	{{u_form.as_p}}
-            	{{p_form.as_p}}
+            	{{ u_form|crispy }}
+            	{{ p_form|crispy }}
             	<input type="Submit" class="btn btn-primary" value="Save">
-            </div>
           </form><!-- Vertical Form -->
         </div>
       </div>
