@@ -12,10 +12,10 @@ from django.shortcuts import redirect
 @login_required
 def index(request):
 	dashboardInfo = DashboardData.objects.filter(author = request.user)
-	avgGlucose = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('glucose')).get('glucose__avg'),2)
-	avgWeight = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('weight')).get('weight__avg'), 2)
-	avgSystolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg'))
-	avgDiastolic = round(DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg'))
+	avgGlucose = DashboardData.objects.filter(author = request.user).aggregate(Avg('glucose')).get('glucose__avg')
+	avgWeight = DashboardData.objects.filter(author = request.user).aggregate(Avg('weight')).get('weight__avg')
+	avgSystolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg')
+	avgDiastolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg')
 	context = {
 		'dashboardInfo':dashboardInfo,
 		'avgGlucose':avgGlucose,

@@ -43,8 +43,8 @@ class PredictionData(models.Model):
 class ProfileModel(models.Model):
 
 	CHOICES = (
-		('M', 'Male'),
-		('F', 'Female'),
+		('Male', 'Male'),
+		('Female', 'Female'),
 
 	)
 

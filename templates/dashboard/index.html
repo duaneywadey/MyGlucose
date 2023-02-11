@@ -42,7 +42,10 @@
                 </div>
                
                 <div class="ps-3">
+                  {% if avgGlucose is None %}
                   <h6>{{avgGlucose}}</h6>
+                  {% endif %}
+                  <h6>{{avgGlucose|floatformat:2}}</h6>
                 </div>
                 
               </div>
@@ -76,7 +79,10 @@
                   <i class="bi bi-box-arrow-in-down"></i>
                 </div>
                 <div class="ps-3">
+                  {% if avgWeight is None %}
                   <h6>{{avgWeight}}</h6>
+                  {% endif %}
+                  <h6>{{avgWeight|floatformat:2}}</h6>
                 </div>
               </div>
             </div>
@@ -110,7 +116,10 @@
                   <i class="bi bi-droplet-fill"></i>
                 </div>
                 <div class="ps-3">
+                  {% if avgSystolic is None %}
                   <h6>{{avgSystolic}}</h6>
+                  {% endif %}
+                  <h6>{{avgSystolic|floatformat:2}}</h6>
 
                 </div>
               </div>
@@ -147,7 +156,10 @@
                   <i class="bi bi-droplet-fill"></i>
                 </div>
                 <div class="ps-3">
+                  {% if avgDiastolic is None %}
                   <h6>{{avgDiastolic}}</h6>
+                  {% endif %}
+                  <h6>{{avgDiastolic|floatformat:2}}</h6>
                 </div>
               </div>
             </div>
