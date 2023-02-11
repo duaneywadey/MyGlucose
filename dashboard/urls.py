@@ -13,7 +13,9 @@ urlpatterns = [
 	path('history/predictions/<int:pk>', views.predictionEdit, name='prediction-edit'),
 	path('history/delete/predictions/<int:pk>', views.predictionDelete, name='prediction-delete'),
 	path('diabetesdashboard/', views.addDashboard, name='dashboard-addDashboard'),
-	path('addandpredictdiabetes/', views.addAndPredictDiabetes, name='dashboard-addAndPredictDiabetes')
+	path('addandpredictdiabetes/', views.addAndPredictDiabetes, name='dashboard-addAndPredictDiabetes'),
+	path('edit-profile/', views.editProfile, name='dashboard-editProfile')
+
 
 
 	

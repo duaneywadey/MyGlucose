@@ -1,0 +1,47 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+
+<div class="pagetitle">
+  <h1>Profile</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Profile</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-title p-4">
+          <h2>Profile</h2>
+        </div>
+        <div class="card-body">
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="img-fluid" style="max-width: 50%;">
+          <div class="mt-2">
+            <h4>{{request.user.profile.firstName}}</h4>
+            <h4>{{request.user.profile.sex}}, {{request.user.profile.profileAge}}</h4>
+          </div>              
+          <!-- Vertical Form -->
+          <form class="row g-3 mt-2" method="POST" enctype="multipart/form-data">
+            <div class="col-12">
+              {% csrf_token %}
+            	{{u_form.as_p}}
+            	{{p_form.as_p}}
+            	<input type="Submit" class="btn btn-primary" value="Save">
+            </div>
+          </form><!-- Vertical Form -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

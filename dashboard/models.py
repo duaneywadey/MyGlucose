@@ -41,10 +41,23 @@ class PredictionData(models.Model):
 
 
 class ProfileModel(models.Model):
+
+	CHOICES = (
+		('M', 'Male'),
+		('F', 'Female'),
+
+	)
+
 	# One user from django admin is equal to one profile (One to one)
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	avatar = models.ImageField(upload_to='profile', default='avatar.jpg', validators=[
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+	avatar = models.ImageField(upload_to='profile', default='default/blank-profile-picture-973460_960_720.jpg', validators=[
 		FileExtensionValidator(['png', 'jpg'])])
+	profileAge = models.IntegerField(null=True, blank=True)
+	sex = models.CharField(max_length=100, choices = CHOICES, default='')
+	firstName = models.CharField(max_length=200, default='')
+	lastName = models.CharField(max_length=200, default='')
+	address = models.CharField(max_length=200, default='')
+	phoneNum = models.CharField(max_length=50, default='')
 
 	def __str__(self):
 		return f'{self.user.username}'
