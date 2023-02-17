@@ -1,0 +1,23 @@
+{% extends 'partials/baselogin.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+	<div class="col-md-6">
+		<div class="card p-4">
+			<div class="card-body">
+				<div class="text-center">
+					<div class="mb-4 mt-4">
+						<img src="https://www.svgrepo.com/show/406956/person-gesturing-no-light-skin-tone.svg?fbclid=IwAR15DO-JTYiUFu2q4W4f1xEj-bkiKJuj0MlVg5Wm30CYglJr-oxfYTSSQ3k" width="100" height="100" class="d-inline-block align-top" alt="">	
+					</div>
+					<h2>You only have</h2>
+					<h1 class="display-2 text-success">{{prediction}}%</h1>
+					<h2> chance of developing diabetes</h2>
+					<a href="{% url 'dashboard-predict' %}"><u>Submit another response</u></a>	
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

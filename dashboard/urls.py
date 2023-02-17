@@ -4,6 +4,8 @@ from django.contrib.auth import views as authView
 
 urlpatterns = [
 	path('', views.index, name='dashboard-index'),
+	path('predict/', views.predict, name='dashboard-predict'),
+	path('predict/result', views.predictionResult, name='dashboard.predictionResult'),
 	path('signup/', views.signup, name='dashboard-signup'),
 	path('login/', authView.LoginView.as_view(template_name='dashboard/login.html'), name='dashboard-log-in'),
 	path('logout/', views.logout_view, name='dashboard-logout_view'),

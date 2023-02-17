@@ -1,0 +1,103 @@
+{% extends 'partials/baselogin.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row align-items-center justify-content-center" style="height:100vh;">
+      <div class="col-md-4">
+	      <div class="card">
+	        <div class="card-body">
+	        	<div class="card-title">
+	        		<div class="text-center">
+	        			<img src="https://www.svgrepo.com/show/295702/veterinarian.svg" width="50" height="50" class="d-inline-block align-top mb-4" alt="">
+		        		<h2>Predict Diabetes Risk!</h2>
+	        		</div>
+	        	</div>
+	        	<!-- <div class="text-center">
+    				<p>MyGlucose features a machine learning model created in Python to predict an individual's diabetes risk.</p> 
+	        	</div> -->
+	        	<div class="text-center">
+	        		<p>Please fill in the input fields to identify your risk to diabetes. Unsure about your height? This <a href="https://www.thecalculatorsite.com/conversions/charts/height-chart.php"><u>site</u></a> may serve as your guide. You can get your DPF value <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <u>here.</u></a></p>
+	        	</div>  	
+	        	 <!-- Vertical Form -->
+              <form class="row g-3 mt-4" method="POST" action="{% url 'dashboard.predictionResult' %}">
+              	{% csrf_token %}
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">Height (in meters)</label>
+                  <input type="text" class="form-control" id="height" name="height">
+                </div>
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Weight (in Kg)</label>
+                  <input type="text" class="form-control" id="weight" name="weight">
+                </div>
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Age</label>
+                  <input type="text" class="form-control" id="age" name="age">
+                </div>
+                <div class="col-12">
+                  <label for="inputPassword4" class="form-label">DPF</label>
+                  <input type="text" class="form-control" id="dpf" name="dpf">
+                </div>
+                <div class="col-12">
+	                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+	                <label class="form-check-label" for="gridCheck">
+	                  I understand that the information provided by this machine learning model is not a substitute for a doctor's medical advice. 
+	                </label>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form><!-- Vertical Form -->
+              <div class="text-center mt-4">
+              	<a href="{% url 'dashboard-log-in' %}"><u>Return to login page</u></a>
+              </div>
+	        </div>
+	      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Diabetes Pedigree Function (DPF)</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
+          <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Put zero in the input field if neither your mother nor father doesn't have the disease.</i></p>
+          <div class="row">
+            <div class="col-md-6">
+              
+              <input type="text" class="form-control" id="ageinmodal" oninput="ageToDPF()">
+              <input type="text" class="form-control mt-2" id="dpfvalue">
+              <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>                                     
+            </div>
+          </div>     
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const age = document.getElementById('ageinmodal')
+  const dpfvalue = document.getElementById('dpfvalue')
+
+  function ageToDPF() {
+    let output = ((88 - parseFloat(age.value)) + 20) / (((parseFloat(age.value) - 1) - 14) + 50);
+    dpfvalue.value = parseFloat(output.toFixed(3));
+    console.log(output);
+}
+
+  function copyToClipboard() {
+    dpfvalue.select();
+    document.execCommand('copy');
+      alert("Copied to clipboard");
+  }
+
+</script>
+
+{% endblock %}

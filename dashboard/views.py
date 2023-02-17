@@ -6,7 +6,34 @@ from django.contrib.auth import logout
 
 from django.db.models import Avg
 from django.shortcuts import redirect 
+import joblib
 
+
+def predict(request):
+	return render(request, 'dashboard/predict(nosignin).html')
+
+
+def predictionResult(request):
+	height = float(request.POST.get('height'))
+	weight = float(request.POST.get('weight'))
+	bmi = round(weight / ((height)**2),1)
+	dpf = float(request.POST.get('dpf'))
+	age	= int(request.POST.get('age'))
+	
+	model = joblib.load('model/updated_ml_model_diabetes')
+	prediction = model.predict_proba([[bmi, dpf, age]])[:, 1]
+	prediction = int(prediction * 100)
+
+	context = {
+		'height':height,
+		'weight':weight,
+		'bmi':bmi,
+		'dpf':dpf,
+		'age':age,
+		'prediction':prediction
+	}
+
+	return render(request, 'dashboard/result.html', context)
 
 
 @login_required
@@ -118,7 +145,7 @@ def predictionEdit(request, pk):
 	return render(request, 'dashboard/edit-prediction-history.html', context)
 	
 	
-
+@login_required
 def historyDelete(request,pk):
 	dashboardSingleInfo = DashboardData.objects.get(id=pk)
 
@@ -132,7 +159,7 @@ def historyDelete(request,pk):
 
 	return render(request, 'dashboard/delete-dashboard-history.html', context)
 
-
+@login_required
 def predictionDelete(request,pk):
 	predictionSingleInfo = PredictionData.objects.get(id=pk)
 
@@ -146,6 +173,7 @@ def predictionDelete(request,pk):
 
 	return render(request, 'dashboard/delete-prediction-history.html', context)
 
+@login_required
 def editProfile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
