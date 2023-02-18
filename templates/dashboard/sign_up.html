@@ -1,5 +1,7 @@
 {% extends 'partials/baselogin.html' %}
 
+{% load static %}
+
 {% block title %} Sign Up {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -10,7 +12,7 @@
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-title">
-					<h2 class="p-2"><img src="https://www.svgrepo.com/show/295702/veterinarian.svg" width="50" height="50" class="d-inline-block align-top" alt=""> Sign up</h2>
+					<h2 class="p-2"><img src="{% static 'assets/svg/veterinarian.svg' %}" width="50" height="50" class="d-inline-block align-top" alt=""> Sign up</h2>
 					<hr>
 				</div>
 				<div class="card-body">

@@ -1,5 +1,7 @@
 {% extends 'partials/baselogin.html' %}
 
+{% load static %}
+
 {% block title %} Logout {% endblock %}
 
 {% block content %}
@@ -9,7 +11,7 @@
 			<div class="card-body">
 				<div class="text-center">
 					<div class="mb-4 mt-4">
-						<img src="https://www.svgrepo.com/show/493463/male-doctor-taking-an-ok-pose.svg" width="100" height="100" class="d-inline-block align-top" alt="">	
+						<img src="{% static 'assets/svg/male-doctor-taking-an-ok-pose.svg' %}" width="100" height="100" class="d-inline-block align-top" alt="">	
 					</div>
 					<h2>Thank you for using MyGlucose!</h2>
 					<a href="{% url 'dashboard-index' %}"><u>Go back to the login page</u></a>	

@@ -1,5 +1,7 @@
 {% extends 'partials/baselogin.html' %}
 
+{% load static %}
+
 {% block title %} Result {% endblock %}
 
 {% block content %}
@@ -7,15 +9,27 @@
 	<div class="col-md-6">
 		<div class="card p-4">
 			<div class="card-body">
+				{% if prediction < 50 %}
 				<div class="text-center">
 					<div class="mb-4 mt-4">
-						<img src="https://www.svgrepo.com/show/406956/person-gesturing-no-light-skin-tone.svg?fbclid=IwAR15DO-JTYiUFu2q4W4f1xEj-bkiKJuj0MlVg5Wm30CYglJr-oxfYTSSQ3k" width="100" height="100" class="d-inline-block align-top" alt="">	
+						<img src="{% static 'assets/svg/person-gesturing-no-light-skin-tone.svg' %}" width="100" height="100" class="d-inline-block align-top" alt="">	
 					</div>
 					<h2>You only have</h2>
 					<h1 class="display-2 text-success">{{prediction}}%</h1>
 					<h2> chance of developing diabetes</h2>
 					<a href="{% url 'dashboard-predict' %}"><u>Submit another response</u></a>	
-				</div>	
+				</div>
+				{% else %}
+				<div class="text-center">
+					<div class="mb-4 mt-4">
+						<img src="{% static 'assets/svg/person-frowning-light-skin-tone.svg' %}" width="100" height="100" class="d-inline-block align-top" alt="">	
+					</div>
+					<h2>Oh no! You have</h2>
+					<h1 class="display-2 text-danger">{{prediction}}%</h1>
+					<h2> chance of developing diabetes</h2>
+					<a href="{% url 'dashboard-predict' %}"><u>Submit another response</u></a>	
+				</div>
+				{% endif %}	
 			</div>
 		</div>
 	</div>
