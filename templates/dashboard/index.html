@@ -183,7 +183,7 @@
                     data: {
                       labels: [{% for dashboardInfo in dashboardInfo %} '{{ dashboardInfo.dateNow }}', {% endfor %}],
                       datasets: [{
-                        label: 'Line Chart',
+                        label: 'Glucose',
                         data: [{% for dashboardInfo in dashboardInfo %} {{dashboardInfo.glucose}}, {% endfor %}],
                         fill: false,
                         borderColor: 'rgb(72,84,244)',
@@ -218,7 +218,7 @@
                     data: {
                       labels: [{% for dashboardInfo in dashboardInfo %} '{{ dashboardInfo.dateNow }}', {% endfor %}],
                       datasets: [{
-                        label: 'Line Chart',
+                        label: 'Weight',
                         data: [{% for dashboardInfo in dashboardInfo %} {{dashboardInfo.weight}}, {% endfor %}],
                         fill: false,
                         borderColor: 'rgba(46,202,106,255)',
@@ -255,7 +255,7 @@
                     data: {
                       labels: [{% for dashboardInfo in dashboardInfo %} '{{ dashboardInfo.dateNow }}', {% endfor %}],
                       datasets: [{
-                        label: 'Line Chart',
+                        label: 'Systolic BP',
                         data: [{% for dashboardInfo in dashboardInfo %} {{dashboardInfo.systolic_bp}}, {% endfor %}],
                         fill: false,
                         borderColor: 'rgb(256,116,28)',
@@ -292,7 +292,7 @@
                     data: {
                       labels: [{% for dashboardInfo in dashboardInfo %} '{{ dashboardInfo.dateNow }}', {% endfor %}],
                       datasets: [{
-                        label: 'Line Chart',
+                        label: 'Diastolic BP',
                         data: [{% for dashboardInfo in dashboardInfo %} {{dashboardInfo.diastolic_bp}}, {% endfor %}],
                         fill: false,
                         borderColor: 'rgb(256,116,28)',
