@@ -3,7 +3,7 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %}
-<div class="pagetitle">
+<!-- <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
     <ol class="breadcrumb">
@@ -11,11 +11,20 @@
       <li class="breadcrumb-item active">Dashboard</li>
     </ol>
   </nav>
-  </div><!-- End Page Title -->
+  </div> -->
+  <!-- End Page Title -->
 
   <section class="section dashboard">
     <div class="row">
-
+      <div class="col-md-12">
+        <div class="m-4">
+          {% if request.user.is_authenticated %}
+          <h1><img src="https://www.svgrepo.com/show/402888/waving-hand.svg" width="45" height="45" class="d-inline-block align-top" alt=""> Hi, {{request.user}}!</h1>            
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
         <!-- Sales Card -->
         <div class="col-md-3">
           <div class="card info-card sales-card">

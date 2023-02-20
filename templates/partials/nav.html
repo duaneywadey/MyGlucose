@@ -10,7 +10,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
       <div class="p-4">
         {% if request.user.is_authenticated %}
-        <h2>Hi, {{request.user}}!</h2>
+        <h2></h2>
         {% else %}
         <ul class="navbar-nav mr-auto">
           <a class="nav-link" href="{% url 'dashboard-log-in' %}"><li>Login</li></a>

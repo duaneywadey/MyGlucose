@@ -45,6 +45,9 @@ class UserUpdateForm(forms.ModelForm):
     # DELETING HELP TEXT
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
+        self.fields["username"].disabled = True
+        self.fields["email"].disabled = True
+
 
         for fieldname in ['username', 'email']:
             self.fields[fieldname].help_text = None
