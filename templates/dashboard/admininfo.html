@@ -1,0 +1,40 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<!-- <div class="pagetitle">
+  <h1>Dashboard</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </nav>
+  </div> -->
+  <!-- End Page Title -->
+
+<section class="section dashboard">
+  <h1>{{ user.username }}</h1>
+
+<h2>Dashboard Data</h2>
+<ul>
+{% for data in dashboard_data %}
+  <li>{{ data }}</li>
+{% empty %}
+  <li>No data found.</li>
+{% endfor %}
+</ul>
+
+<h2>Prediction Data</h2>
+<ul>
+{% for data in prediction_data %}
+  <li>{{ data }}</li>
+{% empty %}
+  <li>No data found.</li>
+{% endfor %}
+</ul>
+</section>
+
+
+{% endblock %}

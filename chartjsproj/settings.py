@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
+    'admindashboard',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
@@ -133,9 +134,14 @@ STATIC_ROOT = "/var/www/example.com/static/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'dashboard-index'
 
-LOGIN_URL = 'dashboard-log-in'
+# LOGIN_URL = 'dashboard-login' 
+# LOGIN_URL = 'admindashboard-login'
+
+
+# LOGIN_REDIRECT_URL_DASHBOARD = 'dashboard:index'
+# LOGIN_REDIRECT_URL_ADMINDASHBOARD= 'admindashboard:index'
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

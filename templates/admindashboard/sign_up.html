@@ -1,0 +1,30 @@
+{% extends 'partials/baselogin.html' %}
+
+{% load static %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center mt-4">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-title">
+					<h2 class="p-2"><img src="https://www.svgrepo.com/show/345383/consultation-consulting-laptop-doctor-healthy-medical-care-2.svg" width="40" height="40" class="d-inline-block align-top" alt=""> Sign up</h2>
+					<hr>
+				</div>
+				<div class="card-body">
+					<p class="mb-4">Please fill in the following fields.</p>
+					<form class="row g-3 mt-2" method="POST">
+						{% csrf_token %}
+						{{form|crispy}}
+						<input type="Submit" class="btn btn-primary" value="Submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

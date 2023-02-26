@@ -1,0 +1,34 @@
+{% extends 'adminpartials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<!-- <div class="pagetitle">
+  <h1>Dashboard</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </nav>
+  </div> -->
+  <!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container">
+      <div class="row">
+        {% for user in users %}
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-title m-4"><a href="{% url 'admindashboard-patientInfo' user.id %}">{{user.username}}</a></div>
+            <div class="card-body">
+              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

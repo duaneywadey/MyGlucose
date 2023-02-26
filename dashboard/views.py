@@ -1,13 +1,18 @@
-from django.shortcuts import render
-from .models import DashboardData, PredictionData
+from django.shortcuts import render, get_object_or_404
+from .models import DashboardData, PredictionData, ProfileModel
 from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm
+from .decorators import patient_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
 from django.db.models import Avg
 from django.shortcuts import redirect 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.views import LoginView
 import joblib
 
+class DashboardLoginView(LoginView):
+    template_name = 'dashboard/login.html'
 
 def predict(request):
 	return render(request, 'dashboard/predict(nosignin).html')
@@ -36,25 +41,31 @@ def predictionResult(request):
 	return render(request, 'dashboard/result.html', context)
 
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def index(request):
 	dashboardInfo = DashboardData.objects.filter(author = request.user)
 	avgGlucose = DashboardData.objects.filter(author = request.user).aggregate(Avg('glucose')).get('glucose__avg')
 	avgWeight = DashboardData.objects.filter(author = request.user).aggregate(Avg('weight')).get('weight__avg')
 	avgSystolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg')
 	avgDiastolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg')
+
+
+
 	context = {
 		'dashboardInfo':dashboardInfo,
 		'avgGlucose':avgGlucose,
 		'avgWeight':avgWeight,
 		'avgSystolic':avgSystolic,
 		'avgDiastolic':avgDiastolic,
+
 	}
 
 	return render(request, 'dashboard/index.html', context)
 
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def addDashboard(request):
 	dashboardInfo = DashboardData.objects.all()
 
@@ -78,7 +89,8 @@ def addDashboard(request):
 	return render(request, 'dashboard/diabetestracker.html', context)
 
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def addAndPredictDiabetes(request):
 	predicted_values = PredictionData.objects.filter(author = request.user)
 
@@ -100,7 +112,8 @@ def addAndPredictDiabetes(request):
 
 	return render(request, 'dashboard/predictdiabetes.html', context)
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def history(request):
 	dashboardInfo = DashboardData.objects.filter(author = request.user)
 	predictionInfo = PredictionData.objects.filter(author = request.user)
@@ -112,7 +125,8 @@ def history(request):
 
 	return render(request, 'dashboard/history.html', context)
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def historyEdit(request, pk):
 	dashboardSingleInfo = DashboardData.objects.get(id=pk)
 	if request.method == 'POST':
@@ -128,7 +142,8 @@ def historyEdit(request, pk):
 	}
 	return render(request, 'dashboard/edit-dashboard-history.html', context)
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def predictionEdit(request, pk):
 	predictionSingleInfo = PredictionData.objects.get(id=pk)
 	if request.method == 'POST':
@@ -145,7 +160,8 @@ def predictionEdit(request, pk):
 	return render(request, 'dashboard/edit-prediction-history.html', context)
 	
 	
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def historyDelete(request,pk):
 	dashboardSingleInfo = DashboardData.objects.get(id=pk)
 
@@ -159,7 +175,8 @@ def historyDelete(request,pk):
 
 	return render(request, 'dashboard/delete-dashboard-history.html', context)
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def predictionDelete(request,pk):
 	predictionSingleInfo = PredictionData.objects.get(id=pk)
 
@@ -173,7 +190,8 @@ def predictionDelete(request,pk):
 
 	return render(request, 'dashboard/delete-prediction-history.html', context)
 
-@login_required
+@login_required(login_url='dashboard-login')
+@patient_only
 def editProfile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
@@ -196,12 +214,29 @@ def editProfile(request):
 
 
 
+# if request.method == 'POST':
+#     form = RegistrationForm(request.POST)
+
+#     if form.is_valid():
+#         user = form.save(commit=False)
+
+#         user.save()
+
+#         user_group = Group.objects.get(name='Mygroup') 
+
+#         user.groups.add(user_group)
+
+
+
 def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
+
 		if form.is_valid():
-			form.save()
-			print(form)
+			user = form.save(commit=False)
+			user.save()
+			user_group = Group.objects.get(name='patients')
+			user.groups.add(user_group)
 			return redirect('dashboard-index')
 
 	else:
@@ -214,9 +249,56 @@ def signup(request):
 
 	return render(request, 'dashboard/sign_up.html', context)
 
+
+@login_required(login_url='dashboard-login')
+@patient_only
 def logout_view(request):
 	logout(request)
 	return render(request, 'dashboard/logout.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ADMIN VIEWS TEST
+
+def indexAdmin(request):
+	User = get_user_model()
+	users = User.objects.all()
+
+	context = {
+		'users': users
+	}
+	return render(request, 'dashboard/adminprofiletest.html', context)
+
+def info(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    dashboard_data = DashboardData.objects.filter(author=user)
+    prediction_data = PredictionData.objects.filter(author=user)
+
+    context = {
+        'user': user,
+        'dashboard_data': dashboard_data,
+        'prediction_data': prediction_data,
+    }
+    return render(request, 'dashboard/admininfo.html', context)
+
 
 
 # Getting all users
@@ -235,4 +317,40 @@ def logout_view(request):
 #     business = models.ForeignKey(Business, on_delete= models.CASCADE)
 
 # Job.objects.filter(business__user=user) 
+
+
+
+# Superadmin creates doctor accounts
+# Decorators - to prevent patients from logging in to admin
+
+#  --- GROUP REGISTRATION ---
+
+# if request.method == 'POST':
+#     form = RegistrationForm(request.POST)
+
+#     if form.is_valid():
+#         user = form.save(commit=False)
+
+#         user.save()
+
+#         user_group = Group.objects.get(name='Mygroup') 
+
+#         user.groups.add(user_group)
+
+#         #log the user in
+#         login(request, user)
+
+#         return redirect('/summury')
+
+# else:
+
+#     form = RegistrationForm()
+
+# return render(request, 'account/pages/register.html', {'form':form})
+
+
+
+# Getting all members in a group 
+
+# users = User.objects.filter(groups__name='group_name')
 

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import DashboardLoginView
 from django.contrib.auth import views as authView
 
 urlpatterns = [
@@ -7,7 +8,7 @@ urlpatterns = [
 	path('predict/', views.predict, name='dashboard-predict'),
 	path('predict/result', views.predictionResult, name='dashboard.predictionResult'),
 	path('signup/', views.signup, name='dashboard-signup'),
-	path('login/', authView.LoginView.as_view(template_name='dashboard/login.html'), name='dashboard-log-in'),
+	path('login/', DashboardLoginView.as_view(), name='dashboard-login'),
 	path('logout/', views.logout_view, name='dashboard-logout_view'),
 	path('history/', views.history, name='dashboard-history'),
 	path('history/<int:pk>/', views.historyEdit, name='history-edit'),
@@ -16,7 +17,10 @@ urlpatterns = [
 	path('history/delete/predictions/<int:pk>', views.predictionDelete, name='prediction-delete'),
 	path('diabetesdashboard/', views.addDashboard, name='dashboard-addDashboard'),
 	path('addandpredictdiabetes/', views.addAndPredictDiabetes, name='dashboard-addAndPredictDiabetes'),
-	path('edit-profile/', views.editProfile, name='dashboard-editProfile')
+	path('edit-profile/', views.editProfile, name='dashboard-editProfile'),
+	path('indexadmin/', views.indexAdmin, name='dashboard-indexAdmin'),
+	path('indexadmin/info/<int:user_id>/', views.info, name='dashboard-info')
+
 
 
 

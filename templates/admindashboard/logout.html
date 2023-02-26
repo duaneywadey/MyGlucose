@@ -1,0 +1,23 @@
+{% extends 'partials/baselogin.html' %}
+
+{% load static %}
+
+{% block title %} Logout {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+	<div class="col-md-6">
+		<div class="card p-4">
+			<div class="card-body">
+				<div class="text-center">
+					<div class="mb-4 mt-4">
+						<img src="https://www.svgrepo.com/show/492827/doctornurse.svg" width="100" height="100" class="d-inline-block align-top" alt="">	
+					</div>
+					<h2>Thank you for using MyGlucose Admin!</h2>
+					<a href="{% url 'admindashboard-index' %}"><u>Go back to the login page</u></a>	
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
