@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import DashboardData, PredictionData, ProfileModel
+from .models import DashboardData, PredictionData, ProfileModel, MessagePanel
 from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm
 from .decorators import patient_only
 from django.contrib.auth.decorators import login_required
@@ -50,7 +50,8 @@ def index(request):
 	avgSystolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg')
 	avgDiastolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg')
 
-
+	# message_panel = MessagePanel.objects.get(user=request.user)
+	# comments = message_panel.comments.all()
 
 	context = {
 		'dashboardInfo':dashboardInfo,
@@ -58,6 +59,7 @@ def index(request):
 		'avgWeight':avgWeight,
 		'avgSystolic':avgSystolic,
 		'avgDiastolic':avgDiastolic,
+		# 'comments':comments
 
 	}
 

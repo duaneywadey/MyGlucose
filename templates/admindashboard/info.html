@@ -2,7 +2,349 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
+
+<section class="section dashboard">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Glucose <span>| Avg mmol/L</span></h5>
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-eyedropper"></i>
+              </div>
+
+              <div class="ps-3">
+                {% if avgGlucose is None %}
+                <h6>{{avgGlucose}}</h6>
+                {% endif %}
+                <h6>{{avgGlucose|floatformat:2}}</h6>
+              </div>
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card info-card revenue-card">
+
+
+          <div class="card-body">
+            <h5 class="card-title">Weight <span>| Average (in Kg)</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-box-arrow-in-down"></i>
+              </div>
+              <div class="ps-3">
+                {% if avgWeight is None %}
+                <h6>{{avgWeight}}</h6>
+                {% endif %}
+                <h6>{{avgWeight|floatformat:2}}</h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+
+        <div class="card info-card customers-card">
+
+
+          <div class="card-body">
+            <h5 class="card-title">Systolic BP <span>| Average</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-droplet-fill"></i>
+              </div>
+              <div class="ps-3">
+                {% if avgSystolic is None %}
+                <h6>{{avgSystolic}}</h6>
+                {% endif %}
+                <h6>{{avgSystolic|floatformat:0}}</h6>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+
+        <div class="card info-card customers-card">
+
+
+          <div class="card-body">
+            <h5 class="card-title">Diastolic BP <span>| Average</span></h5>
+
+            <div class="d-flex align-items-center">
+              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-droplet-fill"></i>
+              </div>
+              <div class="ps-3">
+                {% if avgDiastolic is None %}
+                <h6>{{avgDiastolic}}</h6>
+                {% endif %}
+                <h6>{{avgDiastolic|floatformat:0}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-title p-4">
+            <h2>Profile</h2>
+          </div>
+          {% for p in profile_data %}
+          <div class="card-body">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+            <div class="text-center mt-4">
+              <h4>{{p.firstName}} {{p.lastName}}</h4>
+              <h4>{{p.sex}}, {{p.profileAge}}</h4>
+            </div>           
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-title p-4">
+            <h2>Personal Information</h2>
+          </div>
+          <div class="card-body">
+            <form class="row g-3">
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.firstName}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.lastName}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Age</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.profileAge}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Sex</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.sex}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.address}}
+                readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.phoneNum}}
+                readonly>
+              </div>
+            </form><!-- Vertical Form -->
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Glucose</h5>
+
+            <!-- Line Chart -->
+            <canvas id="lineChart" style="max-height: 400px;"></canvas>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new Chart(document.querySelector('#lineChart'), {
+                  type: 'line',
+                  data: {
+                    labels: [{% for dashboard_data in dashboard_data %} '{{ dashboard_data.dateNow }}', {% endfor %}],
+                    datasets: [{
+                      label: 'Glucose',
+                      data: [{% for dashboard_data in dashboard_data %} {{dashboard_data.glucose}}, {% endfor %}],
+                      fill: false,
+                      borderColor: 'rgb(72,84,244)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Weight</h5>
+
+            <!-- Line Chart -->
+            <canvas id="lineChart1" style="max-height: 400px;"></canvas>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new Chart(document.querySelector('#lineChart1'), {
+                  type: 'line',
+                  data: {
+                    labels: [{% for dashboard_data in dashboard_data %} '{{ dashboard_data.dateNow }}', {% endfor %}],
+                    datasets: [{
+                      label: 'Weight',
+                      data: [{% for dashboard_data in dashboard_data %} {{dashboard_data.weight}}, {% endfor %}],
+                      fill: false,
+                      borderColor: 'rgba(46,202,106,255)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              });
+            </script>
+            <!-- End Line CHart -->
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Systolic BP</h5>
+
+            <!-- Line Chart -->
+            <canvas id="lineChart2" style="max-height: 400px;"></canvas>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new Chart(document.querySelector('#lineChart2'), {
+                  type: 'line',
+                  data: {
+                    labels: [{% for dashboard_data in dashboard_data %} '{{ dashboard_data.dateNow }}', {% endfor %}],
+                    datasets: [{
+                      label: 'Systolic BP',
+                      data: [{% for dashboard_data in dashboard_data %} {{dashboard_data.systolic_bp}}, {% endfor %}],
+                      fill: false,
+                      borderColor: 'rgb(256,116,28)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              });
+            </script>
+            <!-- End Line CHart -->
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Diastolic BP</h5>
+
+            <!-- Line Chart -->
+            <canvas id="lineChart3" style="max-height: 400px;"></canvas>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                new Chart(document.querySelector('#lineChart3'), {
+                  type: 'line',
+                  data: {
+                    labels: [{% for dashboard_data in dashboard_data %} '{{ dashboard_data.dateNow }}', {% endfor %}],
+                    datasets: [{
+                      label: 'Diastolic BP',
+                      data: [{% for dashboard_data in dashboard_data %} {{dashboard_data.diastolic_bp}}, {% endfor %}],
+                      fill: false,
+                      borderColor: 'rgb(256,116,28)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              });
+            </script>
+            <!-- End Line CHart -->
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</section>
+
+<div class="container mx-auto">
+  <button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="ri-mail-add-line"></i> Send a recommendation
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="height: 500px; overflow-y: scroll;">
+        {% for c in comments %}
+        <div class="card">
+          <div class="card-title m-4">
+            <h2>{{c.author}}</h2>
+          </div>
+          <div class="card-body">
+            <p>{{c.content}}</p>                   
+            <small>{{c.created_at}}</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <form method="POST">
+                {% csrf_token %}
+                {{c_form|crispy}}
+                <button type="Submit" class="btn btn-primary float-end">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -11,10 +353,10 @@
       <li class="breadcrumb-item active">Dashboard</li>
     </ol>
   </nav>
-  </div> -->
-  <!-- End Page Title -->
+</div> -->
+<!-- End Page Title -->
 
-<section class="section dashboard">
+<!-- <section class="section dashboard">
   <h1>{{ user.username }}</h1>
 
 <h2>Dashboard Data</h2>
@@ -49,7 +391,7 @@
 {% endif %}
 <h6>{{avgGlucose|floatformat:2}}</h6>
 
-</section>
+</section> -->
 
 
 {% endblock %}
