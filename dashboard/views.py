@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import DashboardData, PredictionData, ProfileModel, MessagePanel
-from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm
+from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .decorators import patient_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -53,13 +53,25 @@ def index(request):
 	message_panel = MessagePanel.objects.get(user=request.user)
 	comments = message_panel.comments.all()
 
+	if request.method == 'POST':
+		c_form = CommentForm(request.POST)
+		if c_form.is_valid():
+			instance = c_form.save(commit=False)
+			instance.author = request.user
+			instance.message_panel = message_panel
+			instance.save()
+			return redirect('dashboard-index')
+	else:
+		c_form = CommentForm()
+
 	context = {
 		'dashboardInfo':dashboardInfo,
 		'avgGlucose':avgGlucose,
 		'avgWeight':avgWeight,
 		'avgSystolic':avgSystolic,
 		'avgDiastolic':avgDiastolic,
-		'comments':comments
+		'comments':comments,
+		'c_form':c_form
 
 	}
 

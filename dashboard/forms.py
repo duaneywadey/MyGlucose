@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import DashboardData, PredictionData, ProfileModel
+from .models import DashboardData, PredictionData, ProfileModel, Comment
 
 class DashboardDataForm(forms.ModelForm):
 	class Meta:
@@ -57,6 +57,13 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = ProfileModel
 		fields = ['profileAge', 'sex', 'firstName', 'lastName', 'address', 'phoneNum']
+
+
+class CommentForm(forms.ModelForm):
+	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':4, 'placeholder':"Make a recommendation!"}))
+	class Meta:
+		model = Comment
+		fields = ('content',)
 
 
 

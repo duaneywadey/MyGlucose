@@ -21,6 +21,9 @@ class DoctorModel(models.Model):
 	lastName = models.CharField(max_length=200, default='')
 	address = models.CharField(max_length=200, default='')
 	phoneNum = models.CharField(max_length=50, default='')
+	shortDesc = models.CharField(max_length=200, default='')
+
+
 
 	def __str__(self):
 		return f'{self.user.username}'

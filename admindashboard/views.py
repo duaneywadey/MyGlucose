@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect 
-from .forms import SignUpForm, CommentForm, UserUpdateForm, ProfileUpdateForm
+from .forms import DoctorSignUpForm, CommentForm, DoctorUserUpdateForm, DoctorProfileUpdateForm
 from django.contrib.auth import logout
 from dashboard.models import DashboardData, PredictionData, ProfileModel
 from dashboard.models import MessagePanel, Comment
@@ -11,6 +11,7 @@ from .decorators import admin_only
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.db.models import Avg
+from .models import DoctorModel
 
 
 class AdminDashboardLoginView(LoginView):
@@ -66,19 +67,19 @@ def patientInfo(request, user_id):
 	}
 	return render(request, 'admindashboard/info.html', context)
 
-@login_required(login_url='dashboard-login')
+@login_required(login_url='admindashboard-login')
 @admin_only
 def editProfile(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        u_form = DoctorUserUpdateForm(request.POST, instance=request.user)
+        p_form = DoctorProfileUpdateForm(request.POST, request.FILES, instance=request.user.doctorprofile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
             return redirect('admindashboard-editProfile')
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = DoctorUserUpdateForm(instance=request.user)
+        p_form = DoctorProfileUpdateForm(instance=request.user.doctorprofile)
 
     context = {
         'u_form': u_form,
@@ -88,11 +89,34 @@ def editProfile(request):
     return render(request, 'admindashboard/edit-profile.html', context)
 
 
+@login_required(login_url='admindashboard-login')
+@admin_only
+def viewAllDoctors(request):
+	User = get_user_model()
+	allDoctors = User.objects.filter(groups__name='doctors')
 
+	context = {
+		'allDoctors':allDoctors
+	}
+	return render(request, 'admindashboard/alldoctors.html', context)
 
+@login_required(login_url='admindashboard-login')
+@admin_only
+def doctorOnly(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	profile_data = DoctorModel.objects.filter(user=user)
+	print(profile_data)
+
+	context = {
+		'profile_data':profile_data
+	}
+	return render(request, 'admindashboard/doctorinfo.html', context)
+
+@login_required(login_url='admindashboard-login')
+@admin_only
 def signup(request):
 	if request.method == 'POST':
-		form = SignUpForm(request.POST)
+		form = DoctorSignUpForm(request.POST)
 
 		if form.is_valid():
 			user = form.save(commit=False)
@@ -102,7 +126,7 @@ def signup(request):
 			return redirect('admindashboard-index')
 
 	else:
-		form = SignUpForm()
+		form = DoctorSignUpForm()
 
 
 	context = {

@@ -2,6 +2,8 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <!-- <div class="pagetitle">
   <h1>Dashboard</h1>
@@ -361,6 +363,8 @@
                 <div class="row">
                   <div class="col-12">
                     <form method="POST">
+                      {% csrf_token %}
+                      {{c_form|crispy}}
                       <button type="Submit" class="btn btn-primary float-end">Submit</button>
                     </form>
                   </div>
