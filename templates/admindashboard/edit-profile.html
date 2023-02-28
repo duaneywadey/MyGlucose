@@ -1,0 +1,46 @@
+{% extends 'adminpartials/base.html' %}
+
+{% block title %} Profile {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-title p-4">
+          <h2>Doctor's Profile</h2>
+        </div>
+        <div class="card-body">
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+          <div class="text-center mt-4">
+            <h4>{{request.user.profile.firstName}}</h4>
+            <h4>{{request.user.profile.sex}}, {{request.user.profile.profileAge}}</h4>
+          </div>              
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-title p-4">
+          <h2>Personal Information</h2>
+        </div>
+        <div class="card-body">         
+          <!-- Vertical Form -->
+          <form class="row g-3 mt-2" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ u_form|crispy }}
+              {{ p_form|crispy }}
+              <input type="Submit" class="btn btn-primary" value="Save">
+          </form><!-- Vertical Form -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

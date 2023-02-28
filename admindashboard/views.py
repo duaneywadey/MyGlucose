@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect 
-from .forms import SignUpForm, CommentForm
+from .forms import SignUpForm, CommentForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import logout
 from dashboard.models import DashboardData, PredictionData, ProfileModel
 from dashboard.models import MessagePanel, Comment
@@ -65,6 +65,29 @@ def patientInfo(request, user_id):
 		'c_form':c_form
 	}
 	return render(request, 'admindashboard/info.html', context)
+
+@login_required(login_url='dashboard-login')
+@admin_only
+def editProfile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('admindashboard-editProfile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+
+    return render(request, 'admindashboard/edit-profile.html', context)
+
+
 
 
 def signup(request):

@@ -50,8 +50,8 @@ def index(request):
 	avgSystolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg')
 	avgDiastolic = DashboardData.objects.filter(author = request.user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg')
 
-	# message_panel = MessagePanel.objects.get(user=request.user)
-	# comments = message_panel.comments.all()
+	message_panel = MessagePanel.objects.get(user=request.user)
+	comments = message_panel.comments.all()
 
 	context = {
 		'dashboardInfo':dashboardInfo,
@@ -59,7 +59,7 @@ def index(request):
 		'avgWeight':avgWeight,
 		'avgSystolic':avgSystolic,
 		'avgDiastolic':avgDiastolic,
-		# 'comments':comments
+		'comments':comments
 
 	}
 
