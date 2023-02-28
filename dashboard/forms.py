@@ -60,7 +60,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':4, 'placeholder':"Make a recommendation!"}))
+	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':4, 'placeholder':"Talk to a doctor!"}))
 	class Meta:
 		model = Comment
 		fields = ('content',)

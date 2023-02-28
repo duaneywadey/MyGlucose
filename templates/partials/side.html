@@ -36,9 +36,17 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard-editProfile' %}">
           <i class="bi bi-file-person-fill"></i>
-          <span>Profile</span>
+          <span>Edit Profile</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'dashboard-viewAllDoctors' %}">
+          <i class="bi bi-people-fill"></i>
+          <span>Doctor Profiles</span>
+        </a>
+      </li>
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard-logout_view' %}">
@@ -52,3 +60,5 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+
+      

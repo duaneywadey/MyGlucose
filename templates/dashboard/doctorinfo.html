@@ -1,0 +1,75 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="section dashboard">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-title p-4">
+            <h2>Profile</h2>
+          </div>
+          {% for p in profile_data %}
+          <div class="card-body">
+            <img src="https://cdn-icons-png.flaticon.com/512/458/458177.png?w=740&t=st=1677576541~exp=1677577141~hmac=a01b195998f258b53452cac2f6b36e15428e3005f6c74a65fe69922af3312325" class="rounded mx-auto d-block" style="max-width: 75%;">
+            <div class="text-center mt-4">
+              <h4>{{p.firstName}} {{p.lastName}}</h4>
+              <h4>{{p.sex}}, {{p.profileAge}}</h4>
+            </div>           
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-title p-4">
+            <h2>Personal Information</h2>
+          </div>
+          <div class="card-body">
+            <form class="row g-3">
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.firstName}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.lastName}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Age</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.profileAge}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label">Sex</label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.sex}} readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.address}}
+                readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.phoneNum}}
+                readonly>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Short Description</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.shortDesc}}
+                readonly>
+              </div>
+            </form><!-- Vertical Form -->
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

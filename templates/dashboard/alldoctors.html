@@ -1,0 +1,43 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<!-- <div class="pagetitle">
+  <h1>Dashboard</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </nav>
+  </div> -->
+  <!-- End Page Title -->
+
+<section class="section dashboard">
+  <div class="container">
+    <div class="row">
+      <h2 class="m-4">All Doctors</h2>
+      {% for user in allDoctors %}
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-title m-4"><a href="{% url 'dashboard-doctorOnly' user.id %}">{{user.username}}</a></div>
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="https://cdn-icons-png.flaticon.com/512/458/458177.png?w=740&t=st=1677576541~exp=1677577141~hmac=a01b195998f258b53452cac2f6b36e15428e3005f6c74a65fe69922af3312325" class="rounded mx-auto d-block" style="max-width: 75%;">
+                  <div class="py-5">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

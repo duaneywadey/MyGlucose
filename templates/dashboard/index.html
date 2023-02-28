@@ -17,18 +17,14 @@
 <!-- End Page Title -->
 
 <section class="section dashboard">
- <!--    {% for c in comments %}
-    <h2>{{c.author}}</h2>
-    <p>{{c.content}}</p> 
-    <small>{{c.created_at}}</small>
-    {% endfor %} -->
+  <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <div class="m-4">
-          {% if request.user.is_authenticated %}
-          <h1><img src="https://www.svgrepo.com/show/402888/waving-hand.svg" width="45" height="45" class="d-inline-block align-top" alt=""> Hi, {{request.user}}!</h1>
-          {% endif %}
-        </div>
+      <div class="col-md-12 d-flex justify-content-between mb-4">
+        {% if request.user.is_authenticated %}
+        <h1><img src="https://www.svgrepo.com/show/402888/waving-hand.svg" width="45" height="45" class="d-inline-block align-top" alt=""> Hi, {{request.user}}!</h1>
+        {% endif %}
+        <a href="{% url 'dashboard-pdf' %}" class="btn btn-primary">
+          <i class="bi bi-file-earmark-pdf"></i> Print PDF report</a>
       </div>
     </div>
     <div class="row">
@@ -337,7 +333,7 @@
         </button>
       </div>
 
-            <!-- Modal -->
+      <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -374,7 +370,8 @@
           </div>
         </div>
       </div>
-
+    </div>
+  </div>
 </section>
 
-    {% endblock %}
+  {% endblock %}

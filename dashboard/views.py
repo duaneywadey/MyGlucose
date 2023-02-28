@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import DashboardData, PredictionData, ProfileModel, MessagePanel
+from admindashboard.models import DoctorModel
 from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .decorators import patient_only
 from django.contrib.auth.decorators import login_required
@@ -9,6 +10,9 @@ from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.views import LoginView
+from django.views.generic import View
+from django.http import HttpResponse
+from .utils import render_to_pdf 
 import joblib
 
 class DashboardLoginView(LoginView):
@@ -272,6 +276,31 @@ def logout_view(request):
 
 
 
+@login_required(login_url='dashboard-login')
+@patient_only
+def viewAllDoctors(request):
+	User = get_user_model()
+	allDoctors = User.objects.filter(groups__name='doctors')
+
+	context = {
+		'allDoctors':allDoctors
+	}
+	return render(request, 'dashboard/alldoctors.html', context)
+
+@login_required(login_url='dashboard-login')
+@patient_only
+def doctorOnly(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	profile_data = DoctorModel.objects.filter(user=user)
+	print(profile_data)
+
+	context = {
+		'profile_data':profile_data
+	}
+	return render(request, 'dashboard/doctorinfo.html', context)	
+
+
+
 
 
 
@@ -312,6 +341,31 @@ def info(request, user_id):
         'prediction_data': prediction_data,
     }
     return render(request, 'dashboard/admininfo.html', context)
+
+
+
+
+# FOR PDF REPORT
+
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        dashboardInfo = DashboardData.objects.filter(author = request.user)
+        predictionInfo = PredictionData.objects.filter(author = request.user)
+        profileInfo = ProfileModel.objects.filter(user = request.user)
+        data = {
+        	'dashboardInfo':dashboardInfo,
+        	'predictionInfo':predictionInfo,
+        	'profileInfo':profileInfo
+        }
+        pdf = render_to_pdf('dashboard/report.html',data)
+        if pdf:
+            response=HttpResponse(pdf,content_type='application/pdf')
+            filename = "Report"
+            content = "inline; filename= %s" %(filename)
+            response['Content-Disposition']=content
+            return response
+        return HttpResponse("Page Not Found")
+
 
 
 

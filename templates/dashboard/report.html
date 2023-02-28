@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+body{
+    font-size: 150%;
+
+}
+table {
+    padding: 10px 10px 10px 10px;
+}
+
+</style>
+<body>
+
+{% for profileInfo in profileInfo %}
+<p>Name: {{profileInfo.firstName}} {{profileInfo.lastName}}</p>
+<p>Age: {{profileInfo.profileAge}}</p>
+<p>Sex: {{profileInfo.sex}}</p>
+
+{% endfor %}
+
+<h2 style="margin-top: 50px;">Dashboard Data</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Glucose</th>
+    <th>Weight</th>
+    <th>Systolic BP</th>
+    <th>Diastolic BP</th>
+    <th>Date Added</th>
+  </tr>
+  {% for dashboardInfo in dashboardInfo reversed%}
+  <tr>
+    <td>{{dashboardInfo.glucose}}</td>
+    <td>{{dashboardInfo.weight}}</td>
+    <td>{{dashboardInfo.systolic_bp}}</td>
+    <td>{{dashboardInfo.diastolic_bp}}</td>
+    <td>{{dashboardInfo.dateNow}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2 style="margin-top: 50px;">Prediction Results</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Diabetes Probability</th>
+    <th>Date Added</th>
+  </tr>
+  {% for predictionInfo in predictionInfo reversed%}
+  <tr>
+    <td>{{predictionInfo.predictions}}%</td>
+    <td>{{predictionInfo.date}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+</body>
+</html>
+
