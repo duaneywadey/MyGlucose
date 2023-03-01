@@ -373,5 +373,15 @@
     </div>
   </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var modal = document.getElementById('exampleModal');
+  modal.addEventListener('shown.bs.modal', function() {
+    var modalBody = this.querySelector('.modal-body');
+    modalBody.scrollTop = modalBody.scrollHeight - modalBody.clientHeight;
+  });
+});
+  
+</script>
 
   {% endblock %}
