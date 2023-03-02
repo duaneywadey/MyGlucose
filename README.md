@@ -48,9 +48,3 @@ py manage.py collectstatic
 py manage.py runserver
 ```
 
-* Login admin account
-
-```
-Username: acer
-Password: @12344321
-```
