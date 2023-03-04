@@ -2,6 +2,8 @@
 
 {% block title %} Profile {% endblock %}
 
+{% load static %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -14,7 +16,8 @@
           <h2>Profile</h2>
         </div>
         <div class="card-body">
-          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+          <!-- https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png -->
+          <img src="{% static 'default/sample-profile-picture.png' %}" class="rounded mx-auto d-block" style="max-width: 75%;">
           <div class="text-center mt-4">
             <h4>{{request.user.profile.firstName}}</h4>
             <h4>{{request.user.profile.sex}}, {{request.user.profile.profileAge}}</h4>

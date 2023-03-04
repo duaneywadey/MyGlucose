@@ -11,15 +11,18 @@
 	<div class="row justify-content-center mt-4">
 		<div class="col-md-6">
 			<div class="card">
-				<div class="card-title">
-					<h2 class="p-2"><img src="https://www.svgrepo.com/show/345383/consultation-consulting-laptop-doctor-healthy-medical-care-2.svg" width="40" height="40" class="d-inline-block align-top" alt=""> Sign up</h2>
-					<hr>
-				</div>
 				<div class="card-body">
+					<div class="card-title">
+						<h2 class="p-2"><img src="https://www.svgrepo.com/show/345383/consultation-consulting-laptop-doctor-healthy-medical-care-2.svg" width="40" height="40" class="d-inline-block align-top" alt=""> Sign up</h2>
+					</div>
 					<p class="mb-4">Please fill in the following fields.</p>
 					<form class="row g-3 mt-2" method="POST">
 						{% csrf_token %}
 						{{form|crispy}}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			                Tip: Doc, don't forget to Edit your Profile once you log in :)
+			                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		              	</div>
 						<input type="Submit" class="btn btn-primary" value="Submit">
 					</form>
 				</div>

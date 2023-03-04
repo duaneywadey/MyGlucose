@@ -20,6 +20,10 @@
 					<form class="row g-3 mt-2" method="POST">
 						{% csrf_token %}
 						{{form|crispy}}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		                Tip: Don't forget to Edit your Profile once you log in :)
+		                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		              	</div>
 						<input type="Submit" class="btn btn-primary" value="Submit">
 					</form>
 				</div>

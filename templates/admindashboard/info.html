@@ -108,7 +108,7 @@
           <div class="card-body">
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
             <div class="text-center mt-4">
-              <h4>{{p.firstName}} {{p.lastName}}</h4>
+              <h4><strong>{{p.firstName}} {{p.lastName}}</strong></h4>
               <h4>{{p.sex}}, {{p.profileAge}}</h4>
             </div>           
           </div>
@@ -120,7 +120,7 @@
             <h2>Personal Information</h2>
           </div>
           <div class="card-body">
-            <form class="row g-3">
+ <!--            <form class="row g-3">
               <div class="col-12">
                 <label for="inputNanme4" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="inputNanme4" placeholder={{p.firstName}} readonly>
@@ -147,7 +147,46 @@
                 <input type="text" class="form-control" id="inputAddress" placeholder={{p.phoneNum}}
                 readonly>
               </div>
-            </form><!-- Vertical Form -->
+            </form> -->
+            <div class="row">
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>First Name</strong></label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.firstName}} readonly>
+              </div>
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Last Name</strong></label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.lastName}} readonly>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Age</strong></label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.profileAge}} readonly>
+              </div>
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Sex</strong></label>
+                <input type="text" class="form-control" id="inputNanme4" placeholder={{p.sex}} readonly>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <label for="inputAddress" class="form-label"><strong>Address</strong></label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.address}}
+                readonly>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <label for="inputAddress" class="form-label"><strong>Phone Number</strong></label>
+                <input type="text" class="form-control" id="inputAddress" placeholder={{p.phoneNum}}
+                readonly>
+              </div>
+            </div>
+
+
             {% endfor %}
           </div>
         </div>

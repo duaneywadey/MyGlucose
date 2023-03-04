@@ -2,6 +2,8 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% load static %}
+
 {% block content %}
 <!-- <div class="pagetitle">
   <h1>Dashboard</h1>
@@ -11,25 +13,38 @@
       <li class="breadcrumb-item active">Dashboard</li>
     </ol>
   </nav>
-  </div> -->
-  <!-- End Page Title -->
+</div> -->
+<!-- End Page Title -->
 
-  <section class="section dashboard">
-    <div class="container">
-      <div class="row">
-        <h2 class="m-4">Patients List</h2>
-        {% for user in users %}
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-title m-4"><a href="{% url 'admindashboard-patientInfo' user.id %}">{{user.username}}</a></div>
-            <div class="card-body">
-              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+<section class="section dashboard">
+  <div class="container">
+    <div class="row">
+
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <i class="bi bi-star me-1"></i>
+        <strong>Good day, Dr. {{request.user}}!</strong>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <h2 class="m-4">Patients List</h2>            
+        </div>
+        <div class="card-body">
+          <div class="row"> <!-- add row class here -->
+            {% for user in users %}
+            <div class="col-md-4">
+              <div class="card text-center">
+                <div class="card-body">
+                  <img src="{% static 'default/sample-profile-picture.png' %}" class="rounded mx-auto d-block mt-4" style="max-width: 75%;">
+                  <div class="card-title m-4"><a href="{% url 'admindashboard-patientInfo' user.id %}">{{user.username}}</a></div>
+                </div>
+              </div>
             </div>
+            {% endfor %}
           </div>
         </div>
-        {% endfor %}
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 {% endblock %}

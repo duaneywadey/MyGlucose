@@ -3,30 +3,30 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-
+      {% url 'admindashboard-index' as url %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'admindashboard-index' %}">
+        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'admindashboard-index' %}">
           <i class="bi bi-people"></i>
           <span>Patients</span>
         </a>
       </li>
-
+      {% url 'admindashboard-editProfile' as url %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'admindashboard-editProfile' %}">
+        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'admindashboard-editProfile' %}">
           <i class="bi bi-pencil-square"></i>
           <span>Edit Profile </span>
         </a>
       </li>
-
+      {% url 'admindashboard-signup' as url %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'admindashboard-signup' %}">
+        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'admindashboard-signup' %}">
           <i class="bi bi-person-plus-fill"></i>
           <span>Add a Doctor </span>
         </a>
       </li>
-
+      {% url 'admindashboard-viewAllDoctors' as url %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'admindashboard-viewAllDoctors' %}">
+        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'admindashboard-viewAllDoctors' %}">
           <i class="bi bi-people-fill"></i>
           <span>Doctor Profiles </span>
         </a>
