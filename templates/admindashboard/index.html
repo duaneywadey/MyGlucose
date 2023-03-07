@@ -29,6 +29,18 @@
           <h2 class="m-4">Patients List</h2>            
         </div>
         <div class="card-body">
+          <div class="row">
+              <div class="col-md-6">
+                <form method="GET" class="mb-4">
+                  <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search by username" value="{{ query }}">
+                    <div class="input-group-append" style="margin-left: 5px;">
+                      <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           <div class="row"> <!-- add row class here -->
             {% for user in users %}
             <div class="col-md-4">

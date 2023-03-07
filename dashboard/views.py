@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from .models import DashboardData, PredictionData, ProfileModel, MessagePanel
 from admindashboard.models import DoctorModel
 from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm, CommentForm
@@ -279,13 +280,20 @@ def logout_view(request):
 @login_required(login_url='dashboard-login')
 @patient_only
 def viewAllDoctors(request):
-	User = get_user_model()
-	allDoctors = User.objects.filter(groups__name='doctors')
-
-	context = {
-		'allDoctors':allDoctors
-	}
-	return render(request, 'dashboard/alldoctors.html', context)
+    User = get_user_model()
+    allDoctors = User.objects.filter(groups__name='doctors')
+    
+    query = request.GET.get('q', '')
+    if query:
+        allDoctors = allDoctors.filter(
+            Q(username__icontains=query) 
+        ).distinct()
+    
+    context = {
+        'allDoctors':allDoctors,
+        'query': query
+    }
+    return render(request, 'dashboard/alldoctors.html', context)
 
 @login_required(login_url='dashboard-login')
 @patient_only

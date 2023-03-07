@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect 
+from django.db.models import Q
 from .forms import DoctorSignUpForm, CommentForm, DoctorUserUpdateForm, DoctorProfileUpdateForm
 from django.contrib.auth import logout
 from dashboard.models import DashboardData, PredictionData, ProfileModel
@@ -20,13 +21,23 @@ class AdminDashboardLoginView(LoginView):
 @login_required(login_url='admindashboard-login')
 @admin_only
 def index(request):
-	User = get_user_model()
-	users = User.objects.filter(groups__name='patients')
+    User = get_user_model()
+    users = User.objects.filter(groups__name='patients')
 
-	context = {
-		'users': users
-	}
-	return render(request, 'admindashboard/index.html', context)
+    query = request.GET.get('q', '')
+    if query:
+        users = users.filter(
+            Q(username__icontains=query) 
+        ).distinct()
+
+    context = {
+        'users':users,
+        'query': query
+    }
+    
+    return render(request, 'admindashboard/index.html', context)
+
+
 
 @login_required(login_url='admindashboard-login')
 @admin_only
@@ -92,13 +103,21 @@ def editProfile(request):
 @login_required(login_url='admindashboard-login')
 @admin_only
 def viewAllDoctors(request):
-	User = get_user_model()
-	allDoctors = User.objects.filter(groups__name='doctors')
+    User = get_user_model()
+    allDoctors = User.objects.filter(groups__name='doctors')
+    
+    query = request.GET.get('q', '')
+    if query:
+        allDoctors = allDoctors.filter(
+            Q(username__icontains=query) 
+        ).distinct()
+    
+    context = {
+        'allDoctors':allDoctors,
+        'query': query
+    }
+    return render(request, 'admindashboard/alldoctors.html', context)
 
-	context = {
-		'allDoctors':allDoctors
-	}
-	return render(request, 'admindashboard/alldoctors.html', context)
 
 @login_required(login_url='admindashboard-login')
 @admin_only

@@ -5,23 +5,24 @@
 {% load static %}
 
 {% block content %}
-<!-- <div class="pagetitle">
-  <h1>Dashboard</h1>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-  </nav>
-  </div> -->
-  <!-- End Page Title -->
-
 <section class="section dashboard">
   <div class="container">
     <div class="row">
       <div class="card">
         <div class="card-title m-4"><h2>All Doctors</h2></div>
         <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <form method="GET" class="mb-4">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control" placeholder="Search by username" value="{{ query }}">
+                  <div class="input-group-append" style="margin-left: 5px;">
+                    <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
           <div class="row">
             {% for user in allDoctors %}
               <div class="col-md-4">
@@ -47,5 +48,4 @@
     </div>
   </div>
 </section>
-
 {% endblock %}
