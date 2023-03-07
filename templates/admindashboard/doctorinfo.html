@@ -30,39 +30,51 @@
             <h2>Personal Information</h2>
           </div>
           <div class="card-body">
-            <form class="row g-3">
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label">First Name</label>
+            <div class="row">
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>First Name</strong></label>
                 <input type="text" class="form-control" id="inputNanme4" placeholder={{p.firstName}} readonly>
               </div>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label">Last Name</label>
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Last Name</strong></label>
                 <input type="text" class="form-control" id="inputNanme4" placeholder={{p.lastName}} readonly>
               </div>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label">Age</label>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Age</strong></label>
                 <input type="text" class="form-control" id="inputNanme4" placeholder={{p.profileAge}} readonly>
               </div>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label">Sex</label>
+              <div class="col-6">
+                <label for="inputNanme4" class="form-label"><strong>Sex</strong></label>
                 <input type="text" class="form-control" id="inputNanme4" placeholder={{p.sex}} readonly>
               </div>
+            </div>
+
+            <div class="row mt-4">
               <div class="col-12">
-                <label for="inputAddress" class="form-label">Address</label>
+                <label for="inputAddress" class="form-label"><strong>Address</strong></label>
                 <input type="text" class="form-control" id="inputAddress" placeholder={{p.address}}
                 readonly>
               </div>
+            </div>
+
+            <div class="row mt-4">
               <div class="col-12">
-                <label for="inputAddress" class="form-label">Phone Number</label>
+                <label for="inputAddress" class="form-label"><strong>Phone Number</strong></label>
                 <input type="text" class="form-control" id="inputAddress" placeholder={{p.phoneNum}}
                 readonly>
               </div>
+            </div>
+
+            <div class="row mt-4">
               <div class="col-12">
-                <label for="inputAddress" class="form-label">Short Description</label>
+                <label for="inputAddress" class="form-label"><strong>Short Description</strong></label>
                 <input type="text" class="form-control" id="inputAddress" placeholder={{p.shortDesc}}
                 readonly>
               </div>
-            </form><!-- Vertical Form -->
+            </div>
             {% endfor %}
           </div>
         </div>
