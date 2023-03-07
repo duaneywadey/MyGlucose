@@ -26,15 +26,13 @@
           <div class="row">
             {% for user in allDoctors %}
               <div class="col-md-4">
-                <div class="card">
-                  <div class="card-title m-4"><a href="{% url 'dashboard-doctorOnly' user.id %}">{{user.username}}</a></div>
+                <div class="card text-center">
                   <div class="card-body">
                     <div class="container">
                       <div class="row">
                         <div class="col-md-12">
-                          <img src="{% static 'default/458177.png' %}" class="rounded mx-auto d-block" style="max-width: 75%;">
-                          <div class="py-5">
-                          </div>
+                          <img src="{% static 'default/458177.png' %}" class="rounded mx-auto d-block mt-4" style="max-width: 75%;">
+                          <div class="card-title m-4"><a href="{% url 'dashboard-doctorOnly' user.id %}">{{user.username}}</a></div>
                         </div>
                       </div>
                     </div>
