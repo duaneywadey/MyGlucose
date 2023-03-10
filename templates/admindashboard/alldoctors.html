@@ -31,7 +31,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-md-12">
-                          <img src="{% static 'default/458177.png' %}" class="rounded mx-auto d-block mt-4" style="max-width: 75%;">
+                          <img src="{{ user.doctorprofile.avatar.url }}" class="rounded mx-auto d-block mt-4" style="max-width: 75%;">
                           <div class="card-title m-4"><a href="{% url 'admindashboard-doctorOnly' user.id %}">{{user.username}}</a></div>
                         </div>
                       </div>

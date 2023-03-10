@@ -13,7 +13,7 @@ class DoctorModel(models.Model):
 
 	# One user from django admin is equal to one profile (One to one)
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='doctorprofile')
-	avatar = models.ImageField(upload_to='profile', default='default/portrait-doctor-wearing-mask-gloves-3d-illustration-cartoon-style_578102-3595.jpg', validators=[
+	avatar = models.ImageField(upload_to='profile', default='doctor.png', validators=[
 		FileExtensionValidator(['png', 'jpg'])])
 	profileAge = models.IntegerField(null=True, blank=True)
 	sex = models.CharField(max_length=100, choices = CHOICES, default='')

@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
           <!-- https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png -->
-          <img src="{% static 'default/sample-profile-picture.png' %}" class="rounded mx-auto d-block" style="max-width: 75%;">
+          <img src="{{ request.user.profile.avatar.url }}" class="rounded mx-auto d-block" style="max-width: 75%;">
           <div class="text-center mt-4">
             <h4>{{request.user.profile.firstName}}</h4>
             <h4>{{request.user.profile.sex}}, {{request.user.profile.profileAge}}</h4>

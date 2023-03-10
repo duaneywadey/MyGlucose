@@ -50,7 +50,7 @@ class ProfileModel(models.Model):
 
 	# One user from django admin is equal to one profile (One to one)
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-	avatar = models.ImageField(upload_to='profile', default='default/blank-profile-picture-973460_960_720.jpg', validators=[
+	avatar = models.ImageField(upload_to='profile', default='blank-profile-picture-973460_960_720.jpg', validators=[
 		FileExtensionValidator(['png', 'jpg'])])
 	profileAge = models.IntegerField(null=True, blank=True)
 	sex = models.CharField(max_length=100, choices = CHOICES, default='')

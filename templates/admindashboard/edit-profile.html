@@ -16,10 +16,10 @@
           <h2>Doctor's Profile</h2>
         </div>
         <div class="card-body">
-          <img src="{% static 'default/458177.png' %}" class="rounded mx-auto d-block" style="max-width: 70%;">
+          <img src="{{ request.user.doctorprofile.avatar.url }}" class="rounded mx-auto d-block" style="max-width: 70%;">
           <div class="text-center mt-4">
-            <h4>{{request.user.profile.firstName}}</h4>
-            <h4>{{request.user.profile.sex}}, {{request.user.profile.profileAge}}</h4>
+            <h4>{{request.user.doctorprofile.firstName}}</h4>
+            <h4>{{request.user.doctorprofile.sex}}, {{request.user.doctorprofile.profileAge}}</h4>
           </div>              
         </div>
       </div>
