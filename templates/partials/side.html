@@ -5,14 +5,14 @@
 
       {% url 'dashboard-index' as url %}
       <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-index' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-index' %}">
           <i class="bi bi-reception-4"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Profile Page Nav -->
       {% url 'dashboard-addDashboard' as url %}
       <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-addDashboard' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-addDashboard' %}">
           <i class="bi bi-pin-angle-fill"></i>
           <span>Diabetes Tracker</span>
         </a>
@@ -20,28 +20,28 @@
 
       {% url 'dashboard-addAndPredictDiabetes' as url %}
       <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-addAndPredictDiabetes' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-addAndPredictDiabetes' %}">
           <i class="bi bi-grid"></i>
           <span>Predict Diabetes Risk</span>
         </a>
       </li><!-- End Profile Page Nav -->
       {% url 'dashboard-history' as url %}
        <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-history' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-history' %}">
           <i class="bi bi-arrow-return-left"></i>
           <span>History</span>
         </a>
       </li><!-- End Profile Page Nav -->
       {% url 'dashboard-editProfile' as url %}
       <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-editProfile' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-editProfile' %}">
           <i class="bi bi-file-person-fill"></i>
           <span>Edit Profile</span>
         </a>
       </li>
       {% url 'dashboard-viewAllDoctors' as url %}
       <li class="nav-item">
-        <a class="nav-link {% if request.path != url %}collapsed{% endif %}" href="{% url 'dashboard-viewAllDoctors' %}">
+        <a class="nav-link {% if request.path != url %}collapsed link-secondary{% endif %}" href="{% url 'dashboard-viewAllDoctors' %}">
           <i class="bi bi-people-fill"></i>
           <span>Doctor Profiles</span>
         </a>
@@ -49,7 +49,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'dashboard-logout_view' %}">
+        <a class="nav-link collapsed link-secondary" href="{% url 'dashboard-logout_view' %}">
           <i class="bi bi-person-x-fill"></i>
           <span>Logout</span>
         </a>
