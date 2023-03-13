@@ -47,11 +47,13 @@ table {
 
 <table style="width:100%">
   <tr>
+    <th>BMI</th>
     <th>Diabetes Probability</th>
     <th>Date Added</th>
   </tr>
   {% for predictionInfo in predictionInfo reversed%}
   <tr>
+    <td>{{predictionInfo.bmi}}</td>
     <td>{{predictionInfo.predictions}}%</td>
     <td>{{predictionInfo.date}}</td>
   </tr>
