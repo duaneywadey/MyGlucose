@@ -1,2 +1,0 @@
-static_build_command: "python manage.py collectstatic --noinput"
-static_build_path: "static"
