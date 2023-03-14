@@ -16,7 +16,7 @@
           </div>
           {% for p in profile_data %}
           <div class="card-body">
-            <img src="https://cdn-icons-png.flaticon.com/512/458/458177.png?w=740&t=st=1677576541~exp=1677577141~hmac=a01b195998f258b53452cac2f6b36e15428e3005f6c74a65fe69922af3312325" class="rounded mx-auto d-block" style="max-width: 75%;">
+            <img src="{{ user.doctorprofile.avatar.url }}" class="rounded mx-auto d-block" style="max-width: 75%;">
             <div class="text-center mt-4">
               <h4>{{p.firstName}} {{p.lastName}}</h4>
               <h4>{{p.sex}}, {{p.profileAge}}</h4>

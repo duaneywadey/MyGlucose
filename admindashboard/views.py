@@ -127,7 +127,8 @@ def doctorOnly(request, user_id):
 	print(profile_data)
 
 	context = {
-		'profile_data':profile_data
+		'profile_data':profile_data,
+		'user':user
 	}
 	return render(request, 'admindashboard/doctorinfo.html', context)
 

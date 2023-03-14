@@ -106,7 +106,7 @@
           </div>
           {% for p in profile_data %}
           <div class="card-body">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="rounded mx-auto d-block" style="max-width: 75%;">
+            <img src="{{ user.profile.avatar.url }}" class="rounded mx-auto d-block" style="max-width: 75%;">
             <div class="text-center mt-4">
               <h4><strong>{{p.firstName}} {{p.lastName}}</strong></h4>
               <h4>{{p.sex}}, {{p.profileAge}}</h4>
