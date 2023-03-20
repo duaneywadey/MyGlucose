@@ -3,13 +3,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 
-from .models import ProfileModel, MessagePanel
+from .models import ProfileModel, MessagePanel, VerificationPanel
 
 def patients_profile(sender, instance, created, **kwargs):
 	if created:
 		ProfileModel.objects.create(
 			user=instance)
 		MessagePanel.objects.create(
+			user=instance)
+		VerificationPanel.objects.create(
 			user=instance)
 		print('Profile created!')
 

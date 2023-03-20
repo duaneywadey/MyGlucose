@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from .models import DashboardData, PredictionData, ProfileModel, MessagePanel
+from .models import DashboardData, PredictionData, ProfileModel, MessagePanel, VerificationPanel
 from admindashboard.models import DoctorModel
 from .forms import DashboardDataForm, SignUpForm, PredictionDataForm, EditDashboardDataForm, EditPredictionDataForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .decorators import patient_only
@@ -361,9 +361,13 @@ class GeneratePdf(View):
         dashboardInfo = DashboardData.objects.filter(author = request.user)
         predictionInfo = PredictionData.objects.filter(author = request.user)
         profileInfo = ProfileModel.objects.filter(user = request.user)
+        verification_panel = VerificationPanel.objects.get(user=request.user)    
+        verifications = verification_panel.verifications.all()
         data = {
         	'dashboardInfo':dashboardInfo,
         	'predictionInfo':predictionInfo,
+        	'verification_panel':verification_panel,
+        	'verifications':verifications,
         	'profileInfo':profileInfo
         }
         pdf = render_to_pdf('dashboard/report.html',data)

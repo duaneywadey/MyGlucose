@@ -1,13 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect 
 from django.db.models import Q
-from .forms import DoctorSignUpForm, CommentForm, DoctorUserUpdateForm, DoctorProfileUpdateForm
+from .forms import DoctorSignUpForm, CommentForm, DoctorUserUpdateForm, DoctorProfileUpdateForm, VerificationDataForm
 from django.contrib.auth import logout
-from dashboard.models import DashboardData, PredictionData, ProfileModel
+from django.views.generic import View
+from dashboard.utils import render_to_pdf 
+from dashboard.models import DashboardData, PredictionData, ProfileModel, VerificationPanel
 from dashboard.models import MessagePanel, Comment
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.http import HttpResponse
 from .decorators import admin_only
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
@@ -51,7 +54,11 @@ def patientInfo(request, user_id):
 	avgSystolic = DashboardData.objects.filter(author=user).aggregate(Avg('systolic_bp')).get('systolic_bp__avg')
 	avgDiastolic = DashboardData.objects.filter(author=user).aggregate(Avg('diastolic_bp')).get('diastolic_bp__avg')
 	message_panel = MessagePanel.objects.get(user=user)
+	verification_panel = VerificationPanel.objects.get(user=user)
+
 	comments = message_panel.comments.all()
+
+	verifications = verification_panel.verifications.all()
 
 	if request.method == 'POST':
 		c_form = CommentForm(request.POST)
@@ -64,6 +71,17 @@ def patientInfo(request, user_id):
 	else:
 		c_form = CommentForm()
 
+	if request.method == 'POST':
+		v_form = VerificationDataForm(request.POST)
+		if v_form.is_valid():
+			instance = v_form.save(commit=False)
+			instance.author = request.user
+			instance.verification_panel = verification_panel
+			instance.save()
+			return redirect('admindashboard-patientInfo', user.id)
+	else:
+		v_form = VerificationDataForm()
+
 	context = {
 		'user': user,
 		'dashboard_data': dashboard_data,
@@ -74,9 +92,36 @@ def patientInfo(request, user_id):
 		'avgSystolic':avgSystolic,
 		'avgDiastolic':avgDiastolic,
 		'comments':comments,
-		'c_form':c_form
+		'c_form':c_form,
+		'v_form':v_form,
+		'verifications':verifications
 	}
 	return render(request, 'admindashboard/info.html', context)
+
+class GeneratePdf(View):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, pk=user_id)
+        dashboardInfo = DashboardData.objects.filter(author=user)
+        predictionInfo = PredictionData.objects.filter(author=user)
+        profileInfo = ProfileModel.objects.filter(user=user)
+        verification_panel = VerificationPanel.objects.get(user=user)    
+        verifications = verification_panel.verifications.all()
+        data = {
+            'dashboardInfo': dashboardInfo,
+            'predictionInfo': predictionInfo,
+            'profileInfo': profileInfo,
+            'user': user,
+            'verifications':verifications
+        }
+        pdf = render_to_pdf('admindashboard/admin-report.html', data)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Report"
+            content = "inline; filename= %s" % (filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Page Not Found")
+
 
 @login_required(login_url='admindashboard-login')
 @admin_only
@@ -154,6 +199,8 @@ def signup(request):
 	}
 
 	return render(request, 'admindashboard/sign_up.html', context)
+
+
 
 
 @admin_only

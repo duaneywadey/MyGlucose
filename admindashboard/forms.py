@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import DoctorModel
-from dashboard.models import MessagePanel, Comment
+from dashboard.models import MessagePanel, Comment, Verification
 
 
 class DoctorSignUpForm(UserCreationForm):
@@ -42,3 +42,10 @@ class DoctorProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = DoctorModel
 		fields = ['profileAge', 'sex', 'firstName', 'lastName', 'address', 'phoneNum', 'shortDesc', 'avatar']
+
+
+class VerificationDataForm(forms.ModelForm):
+	class Meta:
+		model = Verification
+		fields = []
+		

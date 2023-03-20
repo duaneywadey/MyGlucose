@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import AdminDashboardLoginView
+from .views import AdminDashboardLoginView, GeneratePdf
 from django.contrib.auth import views as authView
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
 	path('signup/', views.signup, name='admindashboard-signup'),
 	path('error/', views.error, name='admindashboard-error'),
 	path('info/<int:user_id>/', views.patientInfo, name='admindashboard-patientInfo'),
+    path('info/pdf/<int:user_id>/', GeneratePdf.as_view(),name='admindashboard-pdf'),
 	path('alldoctors/<int:user_id>/', views.doctorOnly, name='admindashboard-doctorOnly'),
 
 ]
