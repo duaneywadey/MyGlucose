@@ -63,9 +63,8 @@ table {
 <h2 style="margin-top: 100px;">Checked by:</h2>
 {% for v in verifications|slice:":1" %}
 <p>Date last verified: <strong>{{v.created_at}}</strong></p>
-<p>Noted by: <strong>{{v.author}}</strong></p>
+<p>Noted by: <strong>{{v.author.doctorprofile.firstName}} {{v.author.doctorprofile.lastName}}</strong></p>
 {% endfor %}
-
 
 </body>
 </html>

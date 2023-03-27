@@ -15,7 +15,7 @@
       <div class="col-md-3">
         <div class="card info-card sales-card">
           <div class="card-body">
-            <h5 class="card-title">Glucose <span>| Avg mmol/L</span></h5>
+            <h5 class="card-title">Glucose <span>| Avg mg/dL</span></h5>
             <div class="d-flex align-items-center">
               <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                 <i class="bi bi-eyedropper"></i>
@@ -369,7 +369,7 @@
       <div class="modal-body">
         <form method="POST">
           <a href="{% url 'admindashboard-pdf' user.id%}" class="btn btn-danger d-flex justify-content-center align-items-center text-center" style="background-color:  #C41E3A;" target="_blank">
-          <i class="bi bi-file-earmark-pdf"></i> Check PDF report</a>
+          <i class="bi bi-file-earmark-pdf" style="margin-right: 5px;"></i> Check PDF report</a>
           <div class="col-12">
             <div class="form-check mt-4">
               {% csrf_token %}
@@ -383,7 +383,7 @@
          <div class="col-12 mt-4">
           {% for v in verifications|slice:":1" %}
           <p>Date last verified: <strong>{{v.created_at}}</strong></p>
-          <p>Noted by: <strong>{{v.author}}</strong></p>
+          <p>Noted by: <strong>{{v.author.doctorprofile.firstName}} {{v.author.doctorprofile.lastName}}</strong></p>
           {% endfor %}
         </div>
       </div>

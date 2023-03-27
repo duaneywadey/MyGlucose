@@ -111,9 +111,10 @@ class GeneratePdf(View):
             'predictionInfo': predictionInfo,
             'profileInfo': profileInfo,
             'user': user,
-            'verifications':verifications
+            'verifications':verifications,
         }
         pdf = render_to_pdf('admindashboard/admin-report.html', data)
+        
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Report"

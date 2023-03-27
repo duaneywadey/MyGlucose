@@ -24,7 +24,7 @@
         <h1><img src="https://www.svgrepo.com/show/402888/waving-hand.svg" width="45" height="45" class="d-inline-block align-top" alt=""> Hi, {{request.user.profile.firstName}}!</h1>
         {% endif %}
         <a href="{% url 'dashboard-pdf' %}" class="btn btn-danger d-flex justify-content-center align-items-center text-center" style="background-color:  #C41E3A;" target="_blank">
-        <i class="bi bi-file-earmark-pdf"></i> Print PDF report</a>  
+        <i class="bi bi-file-earmark-pdf" style="margin-right: 5px;"></i> Print PDF report</a>  
       </div>
     </div>
     <div class="row">
@@ -46,7 +46,7 @@
           </div>
 
           <div class="card-body">
-            <h5 class="card-title">Glucose <span>| Avg mmol/L</span></h5>
+            <h5 class="card-title">Glucose <span>| Avg mg/dL</span></h5>
 
             <div class="d-flex align-items-center">
               <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">

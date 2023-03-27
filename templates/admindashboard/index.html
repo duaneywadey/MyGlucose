@@ -47,7 +47,8 @@
               <div class="card text-center">
                 <div class="card-body">
                   <img src="{{ user.profile.avatar.url }}" class="rounded mx-auto d-block mt-4" style="max-width: 75%;">
-                  <div class="card-title m-4"><a href="{% url 'admindashboard-patientInfo' user.id %}">{{user.username}}</a></div>
+                  <div class="card-title"><a href="{% url 'admindashboard-patientInfo' user.id %}">{{user.profile.firstName}} {{user.profile.lastName}}</a></div>
+                  <a href="{% url 'admindashboard-doctorOnly' user.id %}">{{user.username}}</a>
                 </div>
               </div>
             </div>
