@@ -2,6 +2,8 @@
 
 {% block title %} Login {% endblock %}
 
+{% load static %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -11,7 +13,7 @@
           <div class="card">
             <div class="card-body">
               <div class="card-title text-center" style="font-size: 2em;">
-                <img src="https://www.svgrepo.com/show/345383/consultation-consulting-laptop-doctor-healthy-medical-care-2.svg" width="50" height="50" class="d-inline-block align-top" alt="">
+                <img src="{% static 'assets/svg/admin-logo.svg' %}" width="50" height="50" class="d-inline-block align-top" alt="">
                 MyGlucose Admin
               </div>
               <!-- Vertical Form -->

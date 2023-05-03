@@ -10,71 +10,74 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Dashboard History Table</h5>
-
           <!-- Default Table -->
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Glucose</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Systolic Blood Pressure</th>
-                <th scope="col">Diastolic Blood Pressure</th>
-                <th scope="col">Date Added</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for dashboardInfo in dashboardInfo reversed%}
-            <tr>
-              <td>{{dashboardInfo.glucose}}</td>
-              <td>{{dashboardInfo.weight}}</td>
-              <td>{{dashboardInfo.systolic_bp}}</td>
-              <td>{{dashboardInfo.diastolic_bp}}</td>
-              <td>{{dashboardInfo.dateNow}}</td>
-              <td><a href="{% url 'history-edit' dashboardInfo.id %}" class="modalbtn btn btn-primary"><i class="bi bi-pencil-square"></i></a> <a href="{% url 'history-delete' dashboardInfo.id %}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
-            </tr>
-            {% endfor %}
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Glucose</th>
+                  <th scope="col">Weight</th>
+                  <th scope="col">Systolic Blood Pressure</th>
+                  <th scope="col">Diastolic Blood Pressure</th>
+                  <th scope="col">Date Added</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dashboardInfo in dashboardInfo reversed%}
+                <tr>
+                  <td>{{dashboardInfo.glucose}}</td>
+                  <td>{{dashboardInfo.weight}}</td>
+                  <td>{{dashboardInfo.systolic_bp}}</td>
+                  <td>{{dashboardInfo.diastolic_bp}}</td>
+                  <td>{{dashboardInfo.dateNow}}</td>
+                  <td><a href="{% url 'history-edit' dashboardInfo.id %}" class="modalbtn btn btn-primary"><i class="bi bi-pencil-square"></i></a> <a href="{% url 'history-delete' dashboardInfo.id %}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
           <!-- End Default Table Example -->
         </div>
       </div>
     </div>
   </div>
-    <div class="row">
+  <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Prediction History Table</h5>
 
           <!-- Default Table -->
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Height</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Age</th>
-                <th scope="col">Diabetes Pedigree Function (DPF)</th>
-                <th scope="col">Diabetes Probability</th>
-                <th scope="col">Date Added</th>
-                <th scope="col">Action</th>                
-              </tr>
-            </thead>
-            <tbody>
-            {% for predictionInfo in predictionInfo reversed%}
-            <tr>
-              <td>{{predictionInfo.height}}</td>
-              <td>{{predictionInfo.weight}}</td>
-              <td>{{predictionInfo.age}}</td>
-              <td>{{predictionInfo.dpf}}</td>
-              <td>{{predictionInfo.predictions}}%</td>
-              <td>{{predictionInfo.date}}</td>
-              <td><a href="{% url 'prediction-edit' predictionInfo.id %}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> <a href="{% url 'prediction-delete' predictionInfo.id %}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
-            </tr>
-            {% endfor %}
-            </tbody>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Height</th>
+                  <th scope="col">Weight</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Diabetes Pedigree Function (DPF)</th>
+                  <th scope="col">Diabetes Probability</th>
+                  <th scope="col">Date Added</th>
+                  <th scope="col">Action</th>                
+                </tr>
+              </thead>
+              <tbody>
+                {% for predictionInfo in predictionInfo reversed%}
+                <tr>
+                  <td>{{predictionInfo.height}}</td>
+                  <td>{{predictionInfo.weight}}</td>
+                  <td>{{predictionInfo.age}}</td>
+                  <td>{{predictionInfo.dpf}}</td>
+                  <td>{{predictionInfo.predictions}}%</td>
+                  <td>{{predictionInfo.date}}</td>
+                  <td><a href="{% url 'prediction-edit' predictionInfo.id %}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a> <a href="{% url 'prediction-delete' predictionInfo.id %}" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
 
-          </table>
+            </table>
+          </div>
           <!-- End Default Table Example -->
         </div>
       </div>
@@ -91,16 +94,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
-          <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Leave blank if your guradian doesn't have the disease.</i></p>
-          <div class="row">
-            <div class="col-md-6">
-              <input type="text" class="form-control" id="age" oninput="ageToDPF()">
-              <input type="text" class="form-control mt-2" id="dpfvalue">
-              <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>
+        <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
+        <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Leave blank if your guradian doesn't have the disease.</i></p>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="age" oninput="ageToDPF()">
+            <input type="text" class="form-control mt-2" id="dpfvalue">
+            <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>
 
-              </div>
-          </div>     
+          </div>
+        </div>     
       </div>
     </div>
   </div>

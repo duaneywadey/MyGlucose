@@ -10,10 +10,11 @@
   <div class="row justify-content-center">
     <div class="col-md-4">
       <div class="card">
-        <div class="card-title p-4">
+        <div class="p-4">
           <h2>Diabetes Status</h2>
           <div id="dateToday" style="color: gray;"></div>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Get your DPF here!</a>  
+          <p>Please fill in the input fields to identify your risk to diabetes. <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><u>Convert</u></a> 
+          your height and weight in the following link. You can get your DPF value <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <u>here.</u></a></p>
         </div>
         <div class="card-body">
           <form class="row g-3" method="POST">
@@ -74,36 +75,181 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
-          <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Leave blank if your guradian doesn't have the disease.</i></p>
-          <div class="row">
-            <div class="col-md-6">
-              
-              <input type="text" class="form-control" id="age" oninput="ageToDPF()">
-              <input type="text" class="form-control mt-2" id="dpfvalue">
-              <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>                                     
+        <p><strong>Diabetes Pedigree Function (DPF) </strong> is an equation used to identify the likelihood of Diabetes based on family history. Please answer the question below to get the DPF value.</p>
+        <p>Is your mother/father diabetic? How old was he/she when diagnosed with diabetes? <i>Put zero in the input field if neither your mother nor father doesn't have the disease.</i></p>
+        <div class="row">
+          <div class="col-md-6">
+
+            <input type="text" class="form-control" id="ageinmodal" oninput="ageToDPF()">
+            <input type="text" class="form-control mt-2" id="dpfvalue">
+            <button class="btn btn-primary" onClick="copyToClipboard()">Copy DPF</button>                                     
+          </div>
+        </div>     
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Convert Height & Weight</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <h3 class="mt-4 mb-4" style="font-weight:bold;">Weight</h3>
+              <div class="col-md-6 mb-4">
+                <label for="inputNanme4" class="form-label">Pound</label>
+                <input type="text" class="form-control" id="pounds" oninput="poundsToAll()">
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="inputNanme4" class="form-label"><strong>Kilograms</strong></label>
+                <input type="text" class="form-control" id="kilograms" oninput="kilogramsToAll()">
+              </div>
             </div>
-          </div>     
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <h3 class="mt-4 mb-4" style="font-weight: bold;">Height</h3>
+              <div class="col-md-4">
+                <label for="inputNanme4" class="form-label">Inches</label>
+                <input type="text" class="form-control" id="inches" oninput="inchToAll()">
+              </div>
+              <div class="col-md-4">
+                <label for="inputNanme4" class="form-label">Centimeters</label>
+                <input type="text" class="form-control" id="centimeters" oninput="centiToAll()">
+              </div>
+              <div class="col-md-4">
+                <label for="inputNanme4" class="form-label"><strong>Meters</strong></label>
+                <input type="text" class="form-control" id="meters" oninput="meterToAll()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          This <a href="https://www.thecalculatorsite.com/conversions/charts/height-chart.php" target="_blank"><u>site</u></a> may also serve as a guide for your height.
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  const age = document.getElementById('age')
+  const age = document.getElementById('ageinmodal')
   const dpfvalue = document.getElementById('dpfvalue')
+  const heightInput = document.getElementById('height');
+  const weightInput = document.getElementById('weight');
+  const ageInput = document.getElementById('age');
+  const dpfInput = document.getElementById('dpf');
+
+  const pounds = document.getElementById('pounds');
+  const kilograms = document.getElementById('kilograms');
+  const inches = document.getElementById('inches');
+  const centimeters = document.getElementById('centimeters');
+  const meters = document.getElementById('meters');
+
+
+
+  // Add event listener to input fields
+  heightInput.addEventListener('input', validateNumber);
+  weightInput.addEventListener('input', validateNumber);
+  ageInput.addEventListener('input', validateNumber);
+  dpfInput.addEventListener('input', validateNumber);
+
+  // Function to validate if input is a number
+  function validateNumber(event) {
+    const input = event.target.value;
+    if (isNaN(input)) {
+      alert('Only numerical values are accepted.');
+      event.target.value = ''; // Clear input field
+    }
+  }
+
 
   function ageToDPF() {
     let output = ((88 - parseFloat(age.value)) + 20) / (((parseFloat(age.value) - 1) - 14) + 50);
     dpfvalue.value = parseFloat(output.toFixed(3));
     console.log(output);
-}
+  }
 
   function copyToClipboard() {
     dpfvalue.select();
     document.execCommand('copy');
-      alert("Copied to clipboard");
+    alert("Copied to clipboard");
   }
+
+  function kilogramsToAll() {
+
+  // kg to lbs 
+  let output = ( parseFloat(kilograms.value) * 2.205) || 0;
+  pounds.value = parseFloat(output.toFixed(2));
+
+  }
+
+  function poundsToAll() {
+
+  // lbs to kg 
+  let output = ( parseFloat(pounds.value) / 2.205) || 0;
+  kilograms.value = parseFloat(output.toFixed(2));
+
+  }
+
+
+  function inchToAll() {
+
+  // inches to cm 
+  let output = ( parseFloat(inches.value) * 2.54) || 0;
+  centimeters.value = parseFloat(output.toFixed(2));
+
+  // inches to meters 
+  let output2 = ( parseFloat(inches.value) / 39.37) || 0;
+  meters.value = parseFloat(output2.toFixed(2));
+
+
+  }
+
+function centiToAll() {
+
+  // centi to inches 
+  let output = ( parseFloat(centimeters.value) / 2.54) || 0;
+  inches.value = parseFloat(output.toFixed(2));
+
+  // centi to meters 
+  let output2 = ( parseFloat(centimeters.value) / 100) || 0;
+  meters.value = parseFloat(output2.toFixed(2));
+
+}
+
+function meterToAll() {
+
+  // meters to inches
+  let output = ( parseFloat(meters.value) * 39.37) || 0;
+  inches.value = parseFloat(output.toFixed(2));
+
+  // meters to centimeters
+  let output2 = ( parseFloat(meters.value) * 100) || 0;
+  centimeters.value = parseFloat(output2.toFixed(2));
+
+}
+
+document.querySelector('form').addEventListener('submit', function(event) {
+  var height = document.querySelector('#height').value.trim();
+  var weight = document.querySelector('#weight').value.trim();
+  var age = document.querySelector('#age').value.trim();
+  var dpf = document.querySelector('#dpf').value.trim();
+
+  if (!height || !weight || !age || !dpf) {
+    event.preventDefault();
+    alert('Please complete filling up the form');
+  }
+});
 
 </script>
 {% endblock %}
